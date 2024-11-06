@@ -80,27 +80,24 @@ class MainWindow(QMainWindow):
     def ping_voice_server(self):
         try:
             result = subprocess.run(
-                ["ping", "-n", "1", self.voice_ip_to_ping], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+                ["ping", "-n", "1", self.voice_ip_to_ping],
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE, creationflags=subprocess.CREATE_NO_WINDOW
             )
-
-            # If the ping was successful (returncode == 0), change the color to green
             if result.returncode == 0:
-                print('voice server ping success')
-                self.update_voice_status_bar("green")  # Change voice server bar to green
+                self.update_voice_status_bar("green")
             else:
-                print('voice server ping failed')
-                self.update_voice_status_bar("red")  # Change voice server bar to red
-
+                self.update_voice_status_bar("red")
         except Exception as e:
-            # If there is any error (e.g., no network connection), set the status bar to red
             print(f"Error: {e}")
             self.update_voice_status_bar("red")
+
 
     def ping_window_server(self):
         try:
             # Run the ping command for the window server
             result = subprocess.run(
-                ["ping", "-n", "1", self.window_ip_to_ping], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+                ["ping", "-n", "1", self.window_ip_to_ping], 
+                stdout=subprocess.PIPE, stderr=subprocess.PIPE,creationflags=subprocess.CREATE_NO_WINDOW
             )
 
             # If the ping was successful (returncode == 0), change the color to green
