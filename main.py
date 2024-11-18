@@ -1,83 +1,164 @@
 import sys
+import os
 from ping3 import ping
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QFrame
+from PyQt5.QtWidgets import (
+    QApplication, QMainWindow, QLabel, QPushButton, QFrame, QTextEdit, QVBoxLayout, QHBoxLayout, QWidget
+)
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPixmap
+from datetime import datetime
+from PyQt5.QtWidgets import QSizePolicy
 
 
 class MainWindow(QMainWindow):
-    def __init__(self, width, height, voice_ip_to_ping, window_ip_to_ping, logo_path):
+    def __init__(self, width, height, voice_ip_to_ping, window_ip_to_ping, logo_path, log_file):
         super().__init__()
-
         self.setWindowTitle("GCS CONTROL PANEL")
-        self.setGeometry(100, 100, width, height)
+        self.setGeometry(100, 100, width, height)  # Adjust the width and height here
+
+        # Track server states
+        self.voice_server_status = False
+        self.window_server_status = False
+
+        # Log file
+        self.log_file = log_file
+
+        # Main Layout
+        self.central_widget = QWidget(self)
+        self.setCentralWidget(self.central_widget)
+        self.main_layout = QVBoxLayout(self.central_widget)
+        self.main_layout.setContentsMargins(20, 20, 20, 20)
+        self.main_layout.setSpacing(15)
+
+        # Top Section: Logo + Title
+        self.setup_top_section(logo_path)
+
+        # Middle Section: Server Statuses and Logs
+        self.setup_middle_section()
+
+        # Timers
+        self.voice_ip_to_ping = voice_ip_to_ping
+        self.window_ip_to_ping = window_ip_to_ping
+        self.setup_timers()
+
+    def setup_top_section(self, logo_path):
+        """Setup the top section with logo and title."""
+        top_layout = QHBoxLayout()
 
         # Logo
         self.logo_label = QLabel(self)
         pixmap = QPixmap(logo_path)
         self.logo_label.setPixmap(pixmap)
         self.logo_label.setScaledContents(True)
-        self.logo_label.setGeometry(10, 5, 70, 50)
+        self.logo_label.setFixedSize(80, 50)
 
-        # Main Title
-        self.label = QLabel("GCS CONTROL PANEL", self)
-        self.label.setAlignment(Qt.AlignCenter)
-        self.label.setGeometry(0, 10, width, 50)
-        self.label.setStyleSheet("font-size: 24px; font-weight: bold;")
-        self.label.setContentsMargins(70, 0, 0, 0)
+        # Title
+        self.title_label = QLabel("GCS CONTROL PANEL", self)
+        self.title_label.setAlignment(Qt.AlignCenter)
+        self.title_label.setStyleSheet("font-size: 24px; font-weight: bold;")
 
-        # Horizontal Line under Title
-        self.title_line = QFrame(self)
-        self.title_line.setGeometry(0, 60, width, 2)
-        self.title_line.setStyleSheet("background-color: black;")
+        top_layout.addWidget(self.logo_label)
+        top_layout.addStretch()
+        top_layout.addWidget(self.title_label)
+        top_layout.addStretch()
 
-        # Voice Server Label
-        self.voice_server_label = QLabel("Voice Server", self)
-        self.voice_server_label.setAlignment(Qt.AlignLeft)
-        self.voice_server_label.setGeometry(100, 100, 150, 50)
-        self.voice_server_label.setStyleSheet("font-size: 18px;")
+        self.main_layout.addLayout(top_layout)
 
-        # Window Server Label
-        self.window_server_label = QLabel("Window Server", self)
-        self.window_server_label.setAlignment(Qt.AlignRight)
-        self.window_server_label.setGeometry(width - 290, 100, 150, 50)
-        self.window_server_label.setStyleSheet("font-size: 18px;")
+    def setup_middle_section(self):
+        """Setup the middle section with server statuses and logs in the same row."""
+        middle_layout = QHBoxLayout()
 
-        # Vertical Line between Servers
-        self.server_divider = QFrame(self)
-        self.server_divider.setGeometry(width // 2 - 1, 100, 2, 130)
-        self.server_divider.setStyleSheet("background-color: black;")
+        # Server Status Section
+        server_layout = QHBoxLayout()
 
-        # Voice Status Bar
-        self.voice_status_bar = QLabel(self)
-        self.voice_status_bar.setGeometry(100, 160, 150, 20)
-        self.voice_status_bar.setStyleSheet("background-color: red;")
+        # Voice Server Section
+        self.voice_section = self.create_server_section(
+            "Voice Server", self.stop_voice_ping
+        )
+        server_layout.addLayout(self.voice_section)
 
-        # Window Status Bar
-        self.window_status_bar = QLabel(self)
-        self.window_status_bar.setGeometry(width - 290, 160, 150, 20)
-        self.window_status_bar.setStyleSheet("background-color: red;")
+        # Window Server Section
+        self.window_section = self.create_server_section(
+            "Window Server", self.stop_window_ping
+        )
+        server_layout.addLayout(self.window_section)
 
-        # Voice Shutdown Button
-        self.voice_shutdown_button = QPushButton("Shutdown", self)
-        self.voice_shutdown_button.setGeometry(100, 190, 150, 30)
-        self.voice_shutdown_button.setStyleSheet("font-size: 16px;")
+        # Add Server Layout to Middle Layout
+        middle_layout.addLayout(server_layout)
 
-        # Window Shutdown Button
-        self.window_shutdown_button = QPushButton("Shutdown", self)
-        self.window_shutdown_button.setGeometry(width - 290, 190, 150, 30)
-        self.window_shutdown_button.setStyleSheet("font-size: 16px;")
+        # Logs Section
+        self.setup_logs_section(middle_layout)
 
-        # Horizontal Line between Shutdown Buttons
-        self.shutdown_line = QFrame(self)
-        self.shutdown_line.setGeometry(0, 230, width, 2)
-        self.shutdown_line.setStyleSheet("background-color: black;")
+        self.main_layout.addLayout(middle_layout)
 
-        # Server IPs
-        self.voice_ip_to_ping = voice_ip_to_ping
-        self.window_ip_to_ping = window_ip_to_ping
+    def create_server_section(self, server_name, stop_function):
+        """Create a section for a server."""
+        layout = QVBoxLayout()
 
-        # Timers
+        # Server Label
+        label = QLabel(server_name, self)
+        label.setAlignment(Qt.AlignCenter)
+        label.setStyleSheet("font-size: 18px; font-weight: bold;")
+        label.setFixedWidth(150)  # Set a fixed width for the label (adjust as needed)
+        layout.addWidget(label)
+
+        # Status Bar
+        status_bar = QLabel(self)
+        status_bar.setFixedSize(150, 20)
+        status_bar.setStyleSheet("background-color: red; border: 1px solid black;")
+        layout.addWidget(status_bar, alignment=Qt.AlignCenter)
+
+        # Shutdown Button
+        shutdown_button = QPushButton("Shutdown", self)
+        shutdown_button.setStyleSheet("font-size: 14px;")
+        shutdown_button.clicked.connect(stop_function)
+        layout.addWidget(shutdown_button, alignment=Qt.AlignCenter)
+
+        layout.addStretch()
+
+        # Save references for updating
+        if server_name == "Voice Server":
+            self.voice_status_bar = status_bar
+        elif server_name == "Window Server":
+            self.window_status_bar = status_bar
+
+        # Add Vertical Divider
+        vertical_line = QFrame(self)
+        vertical_line.setFrameShape(QFrame.VLine)
+        vertical_line.setFrameShadow(QFrame.Sunken)
+        vertical_line.setStyleSheet("background-color: black;")
+        vertical_line.setFixedWidth(2)  # Width of the line
+        layout.addWidget(vertical_line, alignment=Qt.AlignCenter)
+
+        return layout
+
+    def setup_logs_section(self, parent_layout):
+        """Setup the logs section."""
+        log_layout = QVBoxLayout()
+
+        # Logs Label (This remains at its original position)
+        log_label = QLabel("Logs", self)
+        log_label.setAlignment(Qt.AlignLeft)
+        log_label.setStyleSheet("font-size: 16px; font-weight: bold;")
+        log_label.setFixedWidth(150)  # Set a fixed width for the label (adjust as needed)
+        log_layout.addWidget(log_label)
+
+        # Logs Area (Allow it to expand vertically, remove fixed size)
+        self.log_section = QTextEdit(self)
+        self.log_section.setReadOnly(True)
+        self.log_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)  # Allow expansion
+        self.log_section.setStyleSheet("font-size: 12px;")
+        self.log_section.setFixedWidth(400)  # Optionally, set a fixed width for the log section
+        log_layout.addWidget(self.log_section)
+
+        # Add the log layout to the parent layout, ensuring it's added correctly
+        parent_layout.addLayout(log_layout)
+
+        # Initialize the log section with a message
+        self.log_event("Log Section Initialized.")
+
+    def setup_timers(self):
+        """Setup the timers for server monitoring."""
         self.voice_timer = QTimer(self)
         self.voice_timer.timeout.connect(self.ping_voice_server)
         self.voice_timer.start(5000)
@@ -86,68 +167,81 @@ class MainWindow(QMainWindow):
         self.window_timer.timeout.connect(self.ping_window_server)
         self.window_timer.start(5000)
 
-        # Button Actions
-        self.voice_shutdown_button.clicked.connect(self.stop_voice_ping)
-        self.window_shutdown_button.clicked.connect(self.stop_window_ping)
+    def log_event(self, message):
+        """Add an event to the log section and write to the log file."""
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        log_message = f"{timestamp} - {message}"
 
-    def update_voice_status_bar(self, status):
-        self.voice_status_bar.setStyleSheet(f"background-color: {status};")
+        # Update the QTextEdit log section
+        self.log_section.append(log_message)
 
-    def update_window_status_bar(self, status):
-        self.window_status_bar.setStyleSheet(f"background-color: {status};")
+        # Write to the log file
+        with open(self.log_file, 'a') as log_file:
+            log_file.write(log_message + "\n")
+
+    def update_status_bar(self, status_bar, status):
+        """Update the color of a status bar."""
+        status_bar.setStyleSheet(f"background-color: {status}; border: 1px solid black;")
 
     def ping_voice_server(self):
         try:
             response = ping(self.voice_ip_to_ping, timeout=2)
             if response:
-                self.update_voice_status_bar("green")
+                if not self.voice_server_status:
+                    self.log_event("Voice Server became reachable.")
+                self.voice_server_status = True
+                self.update_status_bar(self.voice_status_bar, "green")
             else:
-                self.update_voice_status_bar("red")
+                if self.voice_server_status:
+                    self.log_event("Voice Server became unreachable.")
+                self.voice_server_status = False
+                self.update_status_bar(self.voice_status_bar, "red")
         except Exception as e:
+            self.update_status_bar(self.voice_status_bar, "red")
             print(f"Voice Ping Error: {e}")
-            self.update_voice_status_bar("red")
 
     def ping_window_server(self):
         try:
             response = ping(self.window_ip_to_ping, timeout=2)
             if response:
-                self.update_window_status_bar("green")
+                if not self.window_server_status:
+                    self.log_event("Window Server became reachable.")
+                self.window_server_status = True
+                self.update_status_bar(self.window_status_bar, "green")
             else:
-                self.update_window_status_bar("red")
+                if self.window_server_status:
+                    self.log_event("Window Server became unreachable.")
+                self.window_server_status = False
+                self.update_status_bar(self.window_status_bar, "red")
         except Exception as e:
+            self.update_status_bar(self.window_status_bar, "red")
             print(f"Window Ping Error: {e}")
-            self.update_window_status_bar("red")
 
     def stop_voice_ping(self):
         self.voice_timer.stop()
-        self.update_voice_status_bar("red")
+        self.update_status_bar(self.voice_status_bar, "red")
+        self.log_event("Voice Server monitoring stopped.")
 
     def stop_window_ping(self):
         self.window_timer.stop()
-        self.update_window_status_bar("red")
-
-    def closeEvent(self, event):
-        """Handle application close event."""
-        self.cleanup_resources()
-        event.accept()  # Ensure the application closes
-
-    def cleanup_resources(self):
-        """Stop timers and clean up resources."""
-        if self.voice_timer.isActive():
-            self.voice_timer.stop()
-        if self.window_timer.isActive():
-            self.window_timer.stop()
-        print("Resources cleaned up. Timers stopped.")
+        self.update_status_bar(self.window_status_bar, "red")
+        self.log_event("Window Server monitoring stopped.")
 
 
-def run_app(width=800, height=600, voice_ip_to_ping="192.168.10.212", window_ip_to_ping="192.168.10.60", logo_path="logo.jpeg"):
+def run_app(width=1200, height=600, voice_ip_to_ping="10.10.10.28", window_ip_to_ping="192.168.10.217", logo_path="gcs_logo.png"):
+    # Create log file with current date
+    log_file = datetime.now().strftime("%d-%m-%Y") + "_logs.txt"
+    
+    # Check if log file exists, if not create a new one
+    if not os.path.exists(log_file):
+        with open(log_file, 'w') as file:
+            file.write("Log file created on " + datetime.now().strftime("%Y-%m-%d %H:%M:%S") + "\n")
+
     app = QApplication(sys.argv)
-
-    main_window = MainWindow(width, height, voice_ip_to_ping, window_ip_to_ping, logo_path)
-    main_window.show()
-
+    window = MainWindow(width, height, voice_ip_to_ping, window_ip_to_ping, logo_path, log_file)
+    window.show()
     sys.exit(app.exec_())
 
 
-if __name__ == "__main__":
-    run_app(width=800, height=600, voice_ip_to_ping="192.168.10.217", window_ip_to_ping="192.168.10.60", logo_path="gcs_logo.png")
+# Run the app with default values
+run_app()
