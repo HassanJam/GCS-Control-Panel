@@ -1,20 +1,211 @@
-Log file created on 2024-11-19 10:24:15
-2024-11-19 10:24:16 - Log Section Initialized.
-2024-11-19 10:24:21 - Window Server became reachable.
-2024-11-19 10:24:21 - Voice Server became reachable.
-2024-11-19 10:25:56 - Voice Server became unreachable.
-2024-11-19 10:26:01 - Window Server became unreachable.
-2024-11-19 10:26:01 - Voice Server became reachable.
-2024-11-19 10:26:06 - Window Server became reachable.
-2024-11-19 10:26:16 - Voice Server became unreachable.
-2024-11-19 10:26:21 - Voice Server became reachable.
-2024-11-19 10:26:26 - Voice Server became unreachable.
-2024-11-19 10:26:31 - Voice Server became reachable.
-2024-11-19 10:26:41 - Voice Server became unreachable.
-2024-11-19 10:26:46 - Voice Server became reachable.
-2024-11-19 10:27:01 - Voice Server became unreachable.
-2024-11-19 10:27:06 - Voice Server became reachable.
-2024-11-19 10:27:11 - Voice Server became unreachable.
-2024-11-19 10:27:22 - Voice Server became reachable.
-2024-11-19 10:28:01 - Voice Server became unreachable.
-2024-11-19 10:28:07 - Voice Server became reachable.
+2024-11-19 10:56:53 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 10:56:58 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 10:57:08 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:57:13 - Window Server became unreachable. | Voice: Online, Window: Offline
+2024-11-19 10:57:13 - Voice Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 10:57:18 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 10:57:23 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:57:29 - Voice Server became unreachable. | Voice: Offline, Window: Online
+2024-11-19 10:57:33 - Window Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 10:57:38 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 10:57:43 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:57:48 - Voice Server became unreachable. | Voice: Offline, Window: Online
+2024-11-19 10:58:00 - Window Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 10:58:00 - Voice Server became reachable. | Voice: Online, Window: Offline
+2024-11-19 10:58:03 - Window Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:58:05 - Voice Server became unreachable. | Voice: Offline, Window: Online
+2024-11-19 10:58:08 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:58:34 - Voice Server became unreachable. | Voice: Offline, Window: Online
+2024-11-19 10:58:43 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:58:49 - Voice Server became unreachable. | Voice: Offline, Window: Online
+2024-11-19 10:58:54 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:59:08 - Window Server became unreachable. | Voice: Online, Window: Offline
+2024-11-19 10:59:08 - Voice Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 10:59:14 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 10:59:14 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 10:59:29 - Window Server became unreachable. | Voice: Online, Window: Offline
+2024-11-19 10:59:29 - Voice Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 10:59:34 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 10:59:49 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 11:01:00 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:01:05 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 11:01:15 - Window Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 11:01:20 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 11:01:20 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 11:01:35 - Voice Server became unreachable. | Voice: Offline, Window: Online
+2024-11-19 11:02:18 - Window Server monitoring stopped. | Voice: N/A, Window: Stopped
+2024-11-19 11:04:40 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:04:45 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:05:17 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:05:22 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:05:24 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:05:34 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:05:34 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:05:37 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:05:44 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:05:47 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:10:01 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:10:06 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:10:06 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:10:26 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:10:31 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:10:36 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:10:46 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:10:51 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:11:06 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:11:38 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:11:41 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:11:51 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:11:58 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:12:06 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:12:16 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:12:25 - Voice Server monitoring stopped. | Voice: Stopped, Window: N/A
+2024-11-19 11:13:36 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:13:41 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:14:10 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:14:15 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:14:34 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:14:35 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:16:33 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:16:38 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:16:38 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:17:00 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:17:03 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:17:08 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:17:08 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:17:13 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:17:18 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:17:18 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:17:28 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:17:28 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:17:33 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:17:40 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:17:43 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:17:47 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:17:53 - Voice Server monitoring stopped. | Voice: Stopped, Window: N/A
+2024-11-19 11:18:13 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:18:33 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:19:08 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:19:52 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:19:57 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:19:57 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:20:02 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:20:07 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:20:17 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:20:22 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:20:22 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:20:27 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:20:47 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:21:02 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:21:09 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:21:09 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:21:12 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:21:12 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:21:39 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:21:39 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:21:42 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:22:59 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:23:04 - Window Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:23:04 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:24:00 - Window Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:24:06 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:24:21 - Window Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:24:21 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:24:50 - Window Server monitoring stopped. | Voice: N/A, Window: Stopped
+2024-11-19 11:24:52 - Voice Server monitoring stopped. | Voice: Stopped, Window: N/A
+2024-11-19 11:24:52 - Voice Server monitoring stopped. | Voice: Stopped, Window: N/A
+2024-11-19 11:25:01 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:25:06 - Window Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:25:06 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:25:07 - Voice Server monitoring stopped. | Voice: Stopped, Window: N/A
+2024-11-19 11:25:10 - Window Server monitoring stopped. | Voice: N/A, Window: Stopped
+2024-11-19 11:27:07 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:27:12 - Window Server became reachable. | Voice: N/A, Window: Online
+2024-11-19 11:28:28 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:28:33 - Window Server became reachable. | Voice: N/A, Window: Online
+2024-11-19 11:28:33 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:29:59 - Window Server became unreachable. | Voice: N/A, Window: Offline
+2024-11-19 11:30:05 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:30:25 - Window Server monitoring stopped. | Voice: N/A, Window: Stopped
+2024-11-19 11:30:28 - Voice Server monitoring stopped. | Voice: Stopped, Window: N/A
+2024-11-19 11:30:43 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:30:48 - Window Server became reachable. | Voice: N/A, Window: Online
+2024-11-19 11:30:48 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:31:29 - Window Server became unreachable. | Voice: N/A, Window: Offline
+2024-11-19 11:31:35 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:31:52 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:31:53 - Window Server became reachable. | Voice: N/A, Window: Online
+2024-11-19 11:33:59 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:34:04 - Window Server became reachable. | Voice: N/A, Window: Online
+2024-11-19 11:34:04 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:34:30 - Window Server became unreachable. | Voice: N/A, Window: Offline
+2024-11-19 11:34:36 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:34:45 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:34:49 - Window Server became reachable. | Voice: N/A, Window: Online
+2024-11-19 11:35:45 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:35:45 - Window Server status updated. | Voice: N/A, Window: Online
+2024-11-19 11:35:45 - Voice Server status updated. | Voice: Online, Window: N/A
+2024-11-19 11:35:52 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:35:53 - Voice Server status updated. | Voice: Online, Window: N/A
+2024-11-19 11:35:53 - Window Server status updated. | Voice: N/A, Window: Online
+2024-11-19 11:36:32 - Window Server monitoring stopped. | Voice: N/A, Window: Stopped
+2024-11-19 11:38:59 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:38:59 - Window Server status updated. | Voice: N/A, Window: Online
+2024-11-19 11:38:59 - Voice Server status updated. | Voice: Online, Window: N/A
+2024-11-19 11:43:02 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:43:02 - Window Server status updated. | Voice: N/A, Window: Online
+2024-11-19 11:43:02 - Voice Server status updated. | Voice: Online, Window: N/A
+2024-11-19 11:43:39 - Window Server monitoring stopped. | Voice: N/A, Window: Stopped
+2024-11-19 11:44:00 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:44:02 - Voice Server status updated. | Voice: Offline, Window: N/A
+2024-11-19 11:44:02 - Window Server status updated. | Voice: N/A, Window: Offline
+2024-11-19 11:44:46 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:44:46 - Window Server status updated. | Voice: N/A, Window: Online
+2024-11-19 11:44:46 - Voice Server status updated. | Voice: Online, Window: N/A
+2024-11-19 11:45:13 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:45:18 - Window Server became reachable. | Voice: N/A, Window: Online
+2024-11-19 11:45:18 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:46:19 - Window Server became unreachable. | Voice: N/A, Window: Offline
+2024-11-19 11:46:25 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:46:55 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:47:15 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:47:20 - Window Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:47:20 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:47:51 - Window Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:47:57 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:48:14 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:48:21 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:48:38 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:48:43 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:48:43 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:49:04 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:49:10 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:49:28 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:49:28 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:49:50 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:49:57 - Window Server became reachable. | Voice: Offline, Window: N/A
+2024-11-19 11:49:57 - Voice Server became reachable. | Voice: Online, Window: N/A
+2024-11-19 11:50:17 - Window Server became unreachable. | Voice: Online, Window: N/A
+2024-11-19 11:50:23 - Voice Server became unreachable. | Voice: Offline, Window: N/A
+2024-11-19 11:50:56 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:51:01 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 11:51:13 - Window Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 11:51:18 - Voice Server became reachable. | Voice: Online, Window: Offline
+2024-11-19 11:51:23 - Voice Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 11:51:28 - Voice Server became reachable. | Voice: Online, Window: Offline
+2024-11-19 11:51:33 - Voice Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 11:51:46 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:51:51 - Voice Server became reachable. | Voice: Online, Window: Offline
+2024-11-19 11:52:06 - Log Section Initialized. | Voice: N/A, Window: N/A
+2024-11-19 11:52:11 - Window Server became reachable. | Voice: Offline, Window: Online
+2024-11-19 11:52:16 - Voice Server became reachable. | Voice: Online, Window: Online
+2024-11-19 11:52:21 - Window Server became unreachable. | Voice: Online, Window: Offline
+2024-11-19 11:52:26 - Window Server became reachable. | Voice: Online, Window: Online
+2024-11-19 11:52:31 - Window Server became unreachable. | Voice: Online, Window: Offline
+2024-11-19 11:52:36 - Window Server became reachable. | Voice: Online, Window: Online
+2024-11-19 11:52:41 - Window Server became unreachable. | Voice: Online, Window: Offline
+2024-11-19 11:52:46 - Window Server became reachable. | Voice: Online, Window: Online
+2024-11-19 11:53:38 - Window Server became unreachable. | Voice: Online, Window: Offline
+2024-11-19 11:53:40 - Voice Server became unreachable. | Voice: Offline, Window: Offline
+2024-11-19 11:53:53 - Voice Server became reachable. | Voice: Online, Window: Offline
+2024-11-19 11:54:01 - Window Server became reachable. | Voice: Online, Window: Online

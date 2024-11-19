@@ -2,12 +2,12 @@ import sys
 import os
 from ping3 import ping
 from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QLabel, QPushButton, QFrame, QTextEdit, QVBoxLayout, QHBoxLayout, QWidget
+    QApplication, QMainWindow, QLabel, QPushButton, QFrame, QVBoxLayout, QHBoxLayout, QWidget,
+    QTableWidget, QTableWidgetItem, QSizePolicy, QHeaderView
 )
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPixmap
 from datetime import datetime
-from PyQt5.QtWidgets import QSizePolicy
 
 
 class MainWindow(QMainWindow):
@@ -95,14 +95,18 @@ class MainWindow(QMainWindow):
         log_label.setStyleSheet("font-size: 16px; font-weight: bold;")
         log_label.setFixedWidth(150)
         log_layout.addWidget(log_label)
-        self.log_section = QTextEdit(self)
-        self.log_section.setReadOnly(True)
-        self.log_section.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.log_section.setStyleSheet("font-size: 12px;")
-        self.log_section.setFixedWidth(400)
-        log_layout.addWidget(self.log_section)
+
+        self.log_table = QTableWidget(self)
+        self.log_table.setColumnCount(3)
+        self.log_table.setHorizontalHeaderLabels(["Date", "Voice Server", "Window Server"])
+        self.log_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.log_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.log_table.setStyleSheet("font-size: 12px;")
+        self.log_table.setFixedWidth(400)
+
+        log_layout.addWidget(self.log_table)
         parent_layout.addLayout(log_layout)
-        self.log_event("Log Section Initialized.")
+        self.log_event("N/A", "N/A", "Log Section Initialized.")
 
     def setup_timers(self):
         self.voice_timer = QTimer(self)
@@ -112,10 +116,19 @@ class MainWindow(QMainWindow):
         self.window_timer.timeout.connect(self.ping_window_server)
         self.window_timer.start(5000)
 
-    def log_event(self, message):
+    def log_event(self, voice_status, window_status, message):
+        """Logs the current status of both servers to the table and log file."""
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        log_message = f"{timestamp} - {message}"
-        self.log_section.append(log_message)
+
+        # Update log table
+        row_position = self.log_table.rowCount()
+        self.log_table.insertRow(row_position)
+        self.log_table.setItem(row_position, 0, QTableWidgetItem(timestamp))
+        self.log_table.setItem(row_position, 1, QTableWidgetItem(voice_status))
+        self.log_table.setItem(row_position, 2, QTableWidgetItem(window_status))
+
+        # Write to log file
+        log_message = f"{timestamp} - {message} | Voice: {voice_status}, Window: {window_status}"
         with open(self.log_file, 'a') as log_file:
             log_file.write(log_message + "\n")
 
@@ -123,16 +136,21 @@ class MainWindow(QMainWindow):
         status_bar.setStyleSheet(f"background-color: {status}; border: 1px solid black;")
 
     def ping_voice_server(self):
+        """Checks the Voice Server status and logs any changes."""
         try:
             response = ping(self.voice_ip_to_ping, timeout=2)
-            if response:
-                if not self.voice_server_status:
-                    self.log_event("Voice Server became reachable.")
+            current_window_status = (
+                "Online" if self.window_server_status else "Offline"
+            )  # Get the current Window Server status
+
+            if response:  # If Voice Server is reachable
+                if not self.voice_server_status:  # Status changed to reachable
+                    self.log_event("Online", current_window_status, "Voice Server became reachable.")
                 self.voice_server_status = True
                 self.update_status_bar(self.voice_status_bar, "green")
-            else:
-                if self.voice_server_status:
-                    self.log_event("Voice Server became unreachable.")
+            else:  # If Voice Server is unreachable
+                if self.voice_server_status:  # Status changed to unreachable
+                    self.log_event("Offline", current_window_status, "Voice Server became unreachable.")
                 self.voice_server_status = False
                 self.update_status_bar(self.voice_status_bar, "red")
         except Exception as e:
@@ -140,16 +158,21 @@ class MainWindow(QMainWindow):
             print(f"Voice Ping Error: {e}")
 
     def ping_window_server(self):
+        """Checks the Window Server status and logs any changes."""
         try:
             response = ping(self.window_ip_to_ping, timeout=2)
-            if response:
-                if not self.window_server_status:
-                    self.log_event("Window Server became reachable.")
+            current_voice_status = (
+                "Online" if self.voice_server_status else "Offline"
+            )  # Get the current Voice Server status
+
+            if response:  # If Window Server is reachable
+                if not self.window_server_status:  # Status changed to reachable
+                    self.log_event(current_voice_status, "Online", "Window Server became reachable.")
                 self.window_server_status = True
                 self.update_status_bar(self.window_status_bar, "green")
-            else:
-                if self.window_server_status:
-                    self.log_event("Window Server became unreachable.")
+            else:  # If Window Server is unreachable
+                if self.window_server_status:  # Status changed to unreachable
+                    self.log_event(current_voice_status, "Offline", "Window Server became unreachable.")
                 self.window_server_status = False
                 self.update_status_bar(self.window_status_bar, "red")
         except Exception as e:
@@ -159,15 +182,15 @@ class MainWindow(QMainWindow):
     def stop_voice_ping(self):
         self.voice_timer.stop()
         self.update_status_bar(self.voice_status_bar, "red")
-        self.log_event("Voice Server monitoring stopped.")
+        self.log_event("Stopped", "N/A", "Voice Server monitoring stopped.")
 
     def stop_window_ping(self):
         self.window_timer.stop()
         self.update_status_bar(self.window_status_bar, "red")
-        self.log_event("Window Server monitoring stopped.")
+        self.log_event("N/A", "Stopped", "Window Server monitoring stopped.")
 
 
-def run_app(width=1200, height=600, voice_ip_to_ping="10.10.10.28", window_ip_to_ping="192.168.10.217", logo_path="gcs_logo.png"):
+def run_app(width=1200, height=600, voice_ip_to_ping="192.168.10.168", window_ip_to_ping="10.10.10.26", logo_path="gcs_logo.png"):
     log_file = datetime.now().strftime("%d-%m-%Y") + "_logs.txt"
     if not os.path.exists(log_file):
         with open(log_file, 'w') as file:
