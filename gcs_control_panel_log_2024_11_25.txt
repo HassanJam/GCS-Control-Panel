@@ -1,9 +1,9 @@
 Timestamp              | Voice Server   | Window Server  | Message
 ----------------------------------------------------------------------
-2024-11-25 11:00:38   | N/A          | N/A           | Log Section Initialized.
-2024-11-25 11:00:43   | Online       | Offline       | Voice Server became reachable.
-2024-11-25 11:00:43   | Online       | Online        | Window Server became reachable.
-2024-11-25 11:02:05   | Online       | Offline       | Window Server became unreachable.
-2024-11-25 11:02:43   | Online       | Online        | Window Server became reachable.
-2024-11-25 11:03:38   | Online       | Stopped       | Window Server monitoring stopped.
-2024-11-25 11:03:40   | Stopped      | N/A           | Voice Server monitoring stopped.
+2024-11-25 11:07:50   | N/A          | N/A           | Log Section Initialized.
+2024-11-25 11:07:55   | Offline      | Online        | Window Server became reachable.
+2024-11-25 11:07:55   | Online       | Online        | Voice Server became reachable.
+2024-11-25 11:11:42   | Online       | Offline       | Window Server became unreachable.
+2024-11-25 11:11:44   | Offline      | Offline       | Voice Server became unreachable.
+2024-11-25 11:12:03   | Online       | Offline       | Voice Server became reachable.
+2024-11-25 11:12:05   | Online       | Online        | Window Server became reachable.

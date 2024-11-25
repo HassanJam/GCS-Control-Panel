@@ -199,7 +199,7 @@ class MainWindow(QMainWindow):
 
 
 
-def run_app(width=1200, height=600, voice_ip_to_ping="192.168.10.212", window_ip_to_ping="10.10.10.28", logo_path="gcs_logo.png"):
+def run_app(width=1200, height=600, voice_ip_to_ping="192.168.10.60", window_ip_to_ping="10.10.10.28", logo_path="gcs_logo.png"):
     log_file = datetime.now().strftime("gcs_control_panel_log_%Y_%m_%d.txt")
     app = QApplication(sys.argv)
     window = MainWindow(width, height, voice_ip_to_ping, window_ip_to_ping, logo_path, log_file)
