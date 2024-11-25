@@ -103,11 +103,28 @@ class MainWindow(QMainWindow):
         self.log_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.log_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.log_table.setStyleSheet("font-size: 12px;")
-        self.log_table.setFixedWidth(400)
+        
+        # Set the width for each column
+        self.log_table.setColumnWidth(0, 100)  # Date (reduced width to 100px)
+        self.log_table.setColumnWidth(1, 100)  # Voice Server (reduced width to 100px)
+        self.log_table.setColumnWidth(2, 100)  # Window Server (reduced width to 100px)
+        self.log_table.setColumnWidth(3, 250)  # Message (unchanged width)
+
+        # Enable word wrapping for the message column
+        self.log_table.setWordWrap(True)
+
+        # Set size policy for row height to allow wrapping
+        self.log_table.setRowHeight(0, 40)  # Set an initial height; this may need to be adjusted
+
+        # Make sure the row height adjusts automatically for word wrapping
+        self.log_table.resizeRowsToContents()
 
         log_layout.addWidget(self.log_table)
         parent_layout.addLayout(log_layout)
         self.log_event("N/A", "N/A", "Log Section Initialized.")
+
+
+
 
     def setup_timers(self):
         self.voice_timer = QTimer(self)
