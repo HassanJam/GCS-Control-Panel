@@ -1,6 +1,0 @@
-Log file created on 2024-11-18 12:11:07
-2024-11-18 12:11:07 - Log Section Initialized.
-2024-11-18 12:11:12 - Window Server became reachable.
-2024-11-18 12:11:12 - Voice Server became reachable.
-2024-11-18 12:11:20 - Window Server monitoring stopped.
-2024-11-18 12:11:23 - Voice Server monitoring stopped.
