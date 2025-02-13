@@ -1,5 +1,7 @@
 import sys
 import os
+import json
+from add_server_window import AddServerWindow
 from ping3 import ping
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QLabel, QPushButton, QFrame, QVBoxLayout, QHBoxLayout, QWidget,
@@ -11,13 +13,31 @@ from datetime import datetime
 
 from ping3 import ping
 
+JSON_FILE = "servers.json"
+
+def get_servers():
+    """Retrieve the stored servers as a dictionary."""
+    if os.path.exists(JSON_FILE):
+        with open(JSON_FILE, "r") as file:
+            try:
+                return json.load(file)  # Return as dictionary
+            except json.JSONDecodeError:
+                return {}  # Return empty if file is corrupted
+    return {}
+
+
 class MainWindow(QMainWindow):
     def __init__(self, width, height, voice_ip_to_ping, window_ip_to_ping, logo_path, log_file):
         super().__init__()
+        self.servers = get_servers()
+        
+        for name in self.servers:
+            self.servers[name]["status"] = False
+        
         self.setWindowTitle("GCS CONTROL PANEL")
         self.setGeometry(100, 100, width, height)
-        self.voice_server_status = False
-        self.window_server_status = False
+        # self.voice_server_status = False
+        # self.window_server_status = False
         self.log_file = log_file
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
@@ -26,9 +46,18 @@ class MainWindow(QMainWindow):
         self.main_layout.setSpacing(15)
         self.setup_top_section(logo_path)
         self.setup_middle_section()
-        self.voice_ip_to_ping = voice_ip_to_ping
-        self.window_ip_to_ping = window_ip_to_ping
+        # self.voice_ip_to_ping = voice_ip_to_ping
+        # self.window_ip_to_ping = window_ip_to_ping
         self.setup_timers()
+        
+        self.add_server_button = QPushButton("Add Server", self)
+        self.add_server_button.setStyleSheet("font-size: 14px;")
+        self.add_server_button.clicked.connect(self.open_add_server_popup)
+        self.main_layout.addWidget(self.add_server_button, alignment=Qt.AlignCenter)
+        
+    def open_add_server_popup(self):
+        self.popup = AddServerWindow()
+        self.popup.exec_()
 
     def setup_top_section(self, logo_path):
         top_layout = QHBoxLayout()
@@ -49,14 +78,14 @@ class MainWindow(QMainWindow):
     def setup_middle_section(self):
         middle_layout = QHBoxLayout()
         server_layout = QHBoxLayout()
-        self.voice_section = self.create_server_section(
-            "Voice Server", self.stop_voice_ping
-        )
-        server_layout.addLayout(self.voice_section)
-        self.window_section = self.create_server_section(
-            "Window Server", self.stop_window_ping
-        )
-        server_layout.addLayout(self.window_section)
+        # self.voice_section = self.create_server_section(
+        #     "Voice Server", self.stop_voice_ping
+        # )
+        # server_layout.addLayout(self.voice_section)
+        # self.window_section = self.create_server_section(
+        #     "Window Server", self.stop_window_ping
+        # )
+        # server_layout.addLayout(self.window_section)
         middle_layout.addLayout(server_layout)
         self.setup_logs_section(middle_layout)
         self.main_layout.addLayout(middle_layout)
@@ -77,10 +106,10 @@ class MainWindow(QMainWindow):
         shutdown_button.clicked.connect(stop_function)
         layout.addWidget(shutdown_button, alignment=Qt.AlignCenter)
         layout.addStretch()
-        if server_name == "Voice Server":
-            self.voice_status_bar = status_bar
-        elif server_name == "Window Server":
-            self.window_status_bar = status_bar
+        # if server_name == "Voice Server":
+        #     self.voice_status_bar = status_bar
+        # elif server_name == "Window Server":
+        #     self.window_status_bar = status_bar
         vertical_line = QFrame(self)
         vertical_line.setFrameShape(QFrame.VLine)
         vertical_line.setFrameShadow(QFrame.Sunken)
@@ -123,9 +152,6 @@ class MainWindow(QMainWindow):
         parent_layout.addLayout(log_layout)
         self.log_event("N/A", "N/A", "Log Section Initialized.")
 
-
-
-
     def setup_timers(self):
         self.voice_timer = QTimer(self)
         self.voice_timer.timeout.connect(self.ping_voice_server)
@@ -161,42 +187,62 @@ class MainWindow(QMainWindow):
 
     def update_status_bar(self, status_bar, status):
         status_bar.setStyleSheet(f"background-color: {status}; border: 1px solid black;")
-
-    def ping_voice_server(self):
+        
+    def ping_server(self, name:str, ip:str):
         """Checks the Voice Server status and logs any changes."""
         try:
-            response = ping(self.voice_ip_to_ping, timeout=2)  # Timeout set to 2 seconds
+            response = ping(ip, timeout=2)  # Timeout set to 2 seconds
             if response is not None:  # If response is a valid number, the server is reachable
-                if not self.voice_server_status:  # Status changed to reachable
-                    self.log_event("Online", self.get_current_window_status(), "Voice Server became reachable.")
-                self.voice_server_status = True
-                self.update_status_bar(self.voice_status_bar, "green")
+                
+                # if not self.voice_server_status:  # Status changed to reachable
+                if not self.servers[name]["status"]:
+                    self.log_event("Online", self.get_current_server_status(name=name), f"{name.title} Server became reachable.")
+                self.servers[name]["status"] = True
+                self.update_status_bar(self.servers[name]["status_bar"], "green")
             else:  # If response is None, server is unreachable
-                if self.voice_server_status:  # Status changed to unreachable
-                    self.log_event("Offline", self.get_current_window_status(), "Voice Server became unreachable.")
+                if self.servers[name]["status"]:  # Status changed to unreachable
+                    self.log_event("Offline", self.get_current_server_status(name=name), f"{name.title} Server became unreachable.")
                 self.voice_server_status = False
-                self.update_status_bar(self.voice_status_bar, "red")
+                self.update_status_bar(self.servers[name]["status_bar"], "red")
         except Exception as e:
-            self.update_status_bar(self.voice_status_bar, "red")
-            self.log_event("Offline", self.get_current_window_status(), f"Ping failed for Voice Server: {e}")
+            self.update_status_bar(self.servers[name]["status_bar"], "red")
+            self.log_event("Offline", self.get_current_server_status(name=name), f"Ping failed for {name.title} Server: {e}")
 
-    def ping_window_server(self):
-        """Checks the Window Server status and logs any changes."""
-        try:
-            response = ping(self.window_ip_to_ping, timeout=2)  # Timeout set to 2 seconds
-            if response is not None:  # If response is a valid number, the server is reachable
-                if not self.window_server_status:  # Status changed to reachable
-                    self.log_event(self.get_current_voice_status(), "Online", "Window Server became reachable.")
-                self.window_server_status = True
-                self.update_status_bar(self.window_status_bar, "green")
-            else:  # If response is None, server is unreachable
-                if self.window_server_status:  # Status changed to unreachable
-                    self.log_event(self.get_current_voice_status(), "Offline", "Window Server became unreachable.")
-                self.window_server_status = False
-                self.update_status_bar(self.window_status_bar, "red")
-        except Exception as e:
-            self.update_status_bar(self.window_status_bar, "red")
-            self.log_event(self.get_current_voice_status(), "Offline", f"Ping failed for Window Server: {e}")
+    # def ping_voice_server(self):
+    #     """Checks the Voice Server status and logs any changes."""
+    #     try:
+    #         response = ping(self.voice_ip_to_ping, timeout=2)  # Timeout set to 2 seconds
+    #         if response is not None:  # If response is a valid number, the server is reachable
+    #             if not self.voice_server_status:  # Status changed to reachable
+    #                 self.log_event("Online", self.get_current_window_status(), "Voice Server became reachable.")
+    #             self.voice_server_status = True
+    #             self.update_status_bar(self.voice_status_bar, "green")
+    #         else:  # If response is None, server is unreachable
+    #             if self.voice_server_status:  # Status changed to unreachable
+    #                 self.log_event("Offline", self.get_current_window_status(), "Voice Server became unreachable.")
+    #             self.voice_server_status = False
+    #             self.update_status_bar(self.voice_status_bar, "red")
+    #     except Exception as e:
+    #         self.update_status_bar(self.voice_status_bar, "red")
+    #         self.log_event("Offline", self.get_current_window_status(), f"Ping failed for Voice Server: {e}")
+
+    # def ping_window_server(self):
+    #     """Checks the Window Server status and logs any changes."""
+    #     try:
+    #         response = ping(self.window_ip_to_ping, timeout=2)  # Timeout set to 2 seconds
+    #         if response is not None:  # If response is a valid number, the server is reachable
+    #             if not self.window_server_status:  # Status changed to reachable
+    #                 self.log_event(self.get_current_voice_status(), "Online", "Window Server became reachable.")
+    #             self.window_server_status = True
+    #             self.update_status_bar(self.window_status_bar, "green")
+    #         else:  # If response is None, server is unreachable
+    #             if self.window_server_status:  # Status changed to unreachable
+    #                 self.log_event(self.get_current_voice_status(), "Offline", "Window Server became unreachable.")
+    #             self.window_server_status = False
+    #             self.update_status_bar(self.window_status_bar, "red")
+    #     except Exception as e:
+    #         self.update_status_bar(self.window_status_bar, "red")
+    #         self.log_event(self.get_current_voice_status(), "Offline", f"Ping failed for Window Server: {e}")
 
     def stop_voice_ping(self):
         self.voice_timer.stop()
@@ -207,13 +253,15 @@ class MainWindow(QMainWindow):
         self.window_timer.stop()
         self.update_status_bar(self.window_status_bar, "red")
         self.log_event(self.get_current_voice_status(), "Stopped", "Window Server monitoring stopped.")
+        
+    def get_current_server_status(self, name:str):
+        return "Online" if self.servers[name]["status"] else "Offline"
     
-    def get_current_voice_status(self):
-        return "Online" if self.voice_server_status else "Offline"
+    # def get_current_voice_status(self):
+    #     return "Online" if self.voice_server_status else "Offline"
 
-    def get_current_window_status(self):
-        return "Online" if self.window_server_status else "Offline"
-
+    # def get_current_window_status(self):
+    #     return "Online" if self.window_server_status else "Offline"
 
 
 def run_app(width=1200, height=600, voice_ip_to_ping="192.168.10.60", window_ip_to_ping="10.10.10.28", logo_path="gcs_logo.png"):
