@@ -1,17 +1,132 @@
-Timestamp              | Voice Server   | Window Server  | Message
+Timestamp              | Voice Server   | Window Server   | Message
 ----------------------------------------------------------------------
-2025-02-14 09:38:12   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:39:08   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:39:13   | Online       | Offline       | <built-in method title of str object at 0x000001F7D66B1570> Server became reachable.
-2025-02-14 09:39:55   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:40:58   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:41:16   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:41:29   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:41:34   | Online       | Offline       | <built-in method title of str object at 0x000001F1BE857FB0> Server became reachable.
-2025-02-14 09:42:12   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:42:35   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:42:43   | Online       | Offline       | <built-in method title of str object at 0x00000213B1221370> Server became reachable.
-2025-02-14 09:47:18   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:47:23   | Online       | Offline       | Window Server became reachable.
-2025-02-14 09:48:22   | N/A          | N/A           | Log Section Initialized.
-2025-02-14 09:48:27   | Online       | Offline       | Window Server became reachable.
+2025-02-14 11:54:53   | Offline      | Offline      | Log Section Initialized.
+2025-02-14 11:54:58   | Offline      | Online       | Window Server became reachable.
+2025-02-14 11:55:02   | Offline      | Stopped      | Window Server monitoring stopped.
+2025-02-14 11:55:33   | Stopped      | Stopped      | Voice Server monitoring stopped.
+2025-02-14 11:55:33   | Stopped      | Stopped      | Window Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hassan Server   | Message
+----------------------------------------------------------------------
+2025-02-14 11:55:33   | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 11:55:33   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 11:55:40   | Offline      | Online       | Offline      | Window Server became reachable.
+2025-02-14 11:55:52   | Offline      | Online       | Stopped      | Hassan Server monitoring stopped.
+2025-02-14 11:55:56   | Offline      | Stopped      | Stopped      | Window Server monitoring stopped.
+2025-02-14 11:56:28   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 11:56:35   | Offline      | Online       | Offline      | Window Server became reachable.
+2025-02-14 11:57:02   | Stopped      | Online       | Offline      | Voice Server monitoring stopped.
+2025-02-14 11:57:02   | Stopped      | Stopped      | Offline      | Window Server monitoring stopped.
+2025-02-14 11:57:02   | Stopped      | Stopped      | Stopped      | Hassan Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hassan Server   | Hassan2 Server   | Message
+----------------------------------------------------------------------
+2025-02-14 11:57:02   | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 11:57:02   | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 11:57:07   | Offline      | Offline      | Offline      | Online       | Hassan2 Server became reachable.
+2025-02-14 11:57:09   | Offline      | Online       | Offline      | Online       | Window Server became reachable.
+2025-02-14 11:57:16   | Offline      | Online       | Offline      | Stopped      | Hassan2 Server monitoring stopped.
+2025-02-14 11:57:21   | Offline      | Stopped      | Offline      | Stopped      | Window Server monitoring stopped.
+2025-02-14 11:59:44   | Offline      | Offline      | Log Section Initialized.
+2025-02-14 11:59:49   | Offline      | Online       | Window Server became reachable.
+2025-02-14 12:00:03   | Stopped      | Online       | Voice Server monitoring stopped.
+2025-02-14 12:00:03   | Stopped      | Stopped      | Window Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hasan Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:00:03   | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:00:03   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:00:08   | Offline      | Offline      | Online       | Hasan Server became reachable.
+2025-02-14 12:00:08   | Offline      | Online       | Online       | Window Server became reachable.
+2025-02-14 12:00:15   | Offline      | Online       | Stopped      | Hasan Server monitoring stopped.
+2025-02-14 12:00:16   | Offline      | Stopped      | Stopped      | Window Server monitoring stopped.
+2025-02-14 12:00:28   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:02:12   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:02:17   | Offline      | Offline      | Online       | Hasan Server became reachable.
+2025-02-14 12:02:17   | Offline      | Online       | Online       | Window Server became reachable.
+2025-02-14 12:03:29   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:03:44   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:03:49   | Offline      | Offline      | Online       | Hasan Server became reachable.
+2025-02-14 12:03:49   | Offline      | Online       | Online       | Window Server became reachable.
+2025-02-14 12:03:51   | Offline      | Online       | Stopped      | Hasan Server monitoring stopped.
+2025-02-14 12:04:46   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:04:49   | Offline      | Offline      | Stopped      | Hasan Server monitoring stopped.
+2025-02-14 12:04:50   | Offline      | Online       | Stopped      | Window Server became reachable.
+2025-02-14 12:04:52   | Offline      | Online       | Stopped      | Hasan Server monitoring stopped.
+2025-02-14 12:04:54   | Offline      | Stopped      | Stopped      | Window Server monitoring stopped.
+2025-02-14 12:05:07   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:05:48   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:05:53   | Offline      | Offline      | Online       | Hasan Server became reachable.
+2025-02-14 12:05:53   | Offline      | Online       | Online       | Window Server became reachable.
+2025-02-14 12:06:00   | Stopped      | Online       | Online       | Voice Server monitoring stopped.
+2025-02-14 12:06:00   | Stopped      | Stopped      | Online       | Window Server monitoring stopped.
+2025-02-14 12:06:00   | Stopped      | Stopped      | Stopped      | Hasan Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hasan Server   | Fwqef Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:06:00   | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:06:00   | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:06:03   | Offline      | Offline      | Stopped      | Offline      | Hasan Server monitoring stopped.
+2025-02-14 12:06:08   | Offline      | Offline      | Stopped      | Online       | Fwqef Server became reachable.
+2025-02-14 12:06:08   | Offline      | Online       | Stopped      | Online       | Window Server became reachable.
+2025-02-14 12:06:15   | Stopped      | Online       | Stopped      | Online       | Voice Server monitoring stopped.
+2025-02-14 12:06:15   | Stopped      | Stopped      | Stopped      | Online       | Window Server monitoring stopped.
+2025-02-14 12:06:15   | Stopped      | Stopped      | Stopped      | Online       | Hasan Server monitoring stopped.
+2025-02-14 12:06:15   | Stopped      | Stopped      | Stopped      | Stopped      | Fwqef Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hasan Server   | Fwqef Server   | Vefew Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:06:15   | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:06:15   | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:06:20   | Stopped      | Offline      | Offline      | Offline      | Offline      | Voice Server monitoring stopped.
+2025-02-14 12:06:20   | Stopped      | Stopped      | Offline      | Offline      | Offline      | Window Server monitoring stopped.
+2025-02-14 12:06:20   | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Hasan Server monitoring stopped.
+2025-02-14 12:06:20   | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Fwqef Server monitoring stopped.
+2025-02-14 12:06:20   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Vefew Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hasan Server   | Fwqef Server   | Vefew Server   | Sdveqv Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:06:20   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:06:20   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:06:24   | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Voice Server monitoring stopped.
+2025-02-14 12:06:24   | Stopped      | Stopped      | Offline      | Offline      | Offline      | Offline      | Window Server monitoring stopped.
+2025-02-14 12:06:24   | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Offline      | Hasan Server monitoring stopped.
+2025-02-14 12:06:24   | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Fwqef Server monitoring stopped.
+2025-02-14 12:06:24   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Vefew Server monitoring stopped.
+2025-02-14 12:06:24   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Sdveqv Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hasan Server   | Fwqef Server   | Vefew Server   | Sdveqv Server   | Qfdfqwefqw Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:06:24   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:06:24   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:06:28   | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Voice Server monitoring stopped.
+2025-02-14 12:06:28   | Stopped      | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Window Server monitoring stopped.
+2025-02-14 12:06:28   | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Offline      | Offline      | Hasan Server monitoring stopped.
+2025-02-14 12:06:28   | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Offline      | Fwqef Server monitoring stopped.
+2025-02-14 12:06:28   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Vefew Server monitoring stopped.
+2025-02-14 12:06:28   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Sdveqv Server monitoring stopped.
+2025-02-14 12:06:28   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Qfdfqwefqw Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hasan Server   | Fwqef Server   | Vefew Server   | Sdveqv Server   | Qfdfqwefqw Server   | Wqfqvveq Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:06:28   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:06:28   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:06:33   | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Voice Server monitoring stopped.
+2025-02-14 12:06:33   | Stopped      | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Window Server monitoring stopped.
+2025-02-14 12:06:33   | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Hasan Server monitoring stopped.
+2025-02-14 12:06:33   | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Offline      | Offline      | Fwqef Server monitoring stopped.
+2025-02-14 12:06:33   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Offline      | Vefew Server monitoring stopped.
+2025-02-14 12:06:33   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Offline      | Sdveqv Server monitoring stopped.
+2025-02-14 12:06:33   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Offline      | Qfdfqwefqw Server monitoring stopped.
+2025-02-14 12:06:33   | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Stopped      | Wqfqvveq Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Hasan Server   | Fwqef Server   | Vefew Server   | Sdveqv Server   | Qfdfqwefqw Server   | Wqfqvveq Server   | Qvqbqbeb Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:06:33   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:06:33   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:06:41   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Online       | Qvqbqbeb Server became reachable.
+2025-02-14 12:06:44   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Online       | Online       | Wqfqvveq Server became reachable.
+2025-02-14 12:06:44   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Online       | Online       | Online       | Qfdfqwefqw Server became reachable.
+2025-02-14 12:06:46   | Offline      | Offline      | Offline      | Offline      | Offline      | Online       | Online       | Online       | Online       | Sdveqv Server became reachable.
+2025-02-14 12:06:49   | Offline      | Offline      | Offline      | Offline      | Online       | Online       | Online       | Online       | Online       | Vefew Server became reachable.
+2025-02-14 12:06:52   | Offline      | Offline      | Offline      | Online       | Online       | Online       | Online       | Online       | Online       | Fwqef Server became reachable.
+2025-02-14 12:06:52   | Offline      | Offline      | Online       | Online       | Online       | Online       | Online       | Online       | Online       | Hasan Server became reachable.
+2025-02-14 12:06:52   | Offline      | Online       | Online       | Online       | Online       | Online       | Online       | Online       | Online       | Window Server became reachable.
+2025-02-14 12:06:56   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:07:28   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:07:30   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Stopped      | Qvqbqbeb Server monitoring stopped.
+2025-02-14 12:08:20   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:08:27   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:08:54   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:09:07   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
