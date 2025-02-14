@@ -41,9 +41,47 @@ def get_servers() -> Dict:
 class MainWindow(QMainWindow):
     def __init__(self, width, height, logo_path, log_file):
         super().__init__()
-        
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #2b2b2b;
+                color: #ffffff;
+                font-size: 14px;
+            }
+            QLabel {
+                font-weight: bold;
+                color: #dcdcdc;
+            }
+            QPushButton {
+                font-size: 14px;
+                font-weight: bold;
+                padding: 8px;
+                border-radius: 8px;
+                background-color: #0078d7;
+                color: white;
+            }
+            QPushButton:hover {
+                background-color: #005a9e;
+            }
+            QPushButton:hover {
+                background-color: #005a9e;
+            }
+            QPushButton:pressed {
+                background-color: #004080;
+            }
+            QTableWidget {
+                background-color: #1e1e1e;
+                border: 1px solid #444;
+            }
+            QHeaderView::section {
+                background-color: #444;
+                color: white;
+                padding: 4px;
+                font-weight: bold;
+            }
+        """)
+
         self.refresh_servers()
-        self.setWindowTitle("GCS CONTROL PANEL")
+        self.setWindowTitle("GCS SERVER CONTROL PANEL")
         self.setGeometry(100, 100, width, height)
         self.log_file = log_file
         self.central_widget = QWidget(self)
@@ -228,6 +266,8 @@ class MainWindow(QMainWindow):
         self.log_event("Log Section Initialized.")
 
     def setup_timers(self):
+        """sets up timers for each server
+        """
         for server_name in self.servers:
             print(f"creating timer for {server_name}")
             server_ip = self.servers[server_name]["ip"]
@@ -280,8 +320,15 @@ class MainWindow(QMainWindow):
         with open(self.log_file, 'a') as log_file:
             log_file.write(log_message + "\n")
 
-    def update_status_bar(self, status_bar, status):
-        status_bar.setStyleSheet(f"background-color: {status}; border: 1px solid black;")
+    def update_status_bar(self, status_bar, color:str):
+        """updates status bar to correct color
+
+        :param status_bar: status bar object
+        :type status_bar: status bar object
+        :param color: color of bar, green or red
+        :type color: str
+        """
+        status_bar.setStyleSheet(f"background-color: {color}; border: 1px solid black;")
         
     def ping_server(self, server_name:str, server_ip:str) -> None:
         """pings the given ip address and updates the status and status bar for the server

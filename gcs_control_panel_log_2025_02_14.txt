@@ -130,3 +130,17 @@ Timestamp              | Voice Server   | Window Server   | Hasan Server   | Fwq
 2025-02-14 12:08:27   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
 2025-02-14 12:08:54   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
 2025-02-14 12:09:07   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:15:20   | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:15:24   | Offline      | Online       | Window Server became reachable.
+2025-02-14 12:15:45   | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:15:50   | Offline      | Online       | Window Server became reachable.
+2025-02-14 12:16:32   | Stopped      | Online       | Voice Server monitoring stopped.
+2025-02-14 12:16:32   | Stopped      | Stopped      | Window Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Ol:Il? Server   | Message
+----------------------------------------------------------------------
+2025-02-14 12:16:32   | Offline      | Offline      | Offline      | Added a new server
+2025-02-14 12:16:32   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-02-14 12:16:40   | Offline      | Offline      | Online       | Ol:Il? Server became reachable.
+2025-02-14 12:16:40   | Offline      | Online       | Online       | Window Server became reachable.
+2025-02-14 12:18:17   | Offline      | Stopped      | Online       | Window Server monitoring stopped.
+2025-02-14 12:18:27   | Offline      | Stopped      | Stopped      | Ol:Il? Server monitoring stopped.
