@@ -7,7 +7,7 @@ from add_server_window import AddServerWindow
 from ping3 import ping
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget,
-    QTableWidget, QTableWidgetItem, QSizePolicy, QHeaderView, QGridLayout
+    QTableWidget, QTableWidgetItem, QSizePolicy, QHeaderView, QGridLayout, QStackedWidget, QAbstractScrollArea
 )
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPixmap
@@ -62,9 +62,6 @@ class MainWindow(QMainWindow):
             QPushButton:hover {
                 background-color: #005a9e;
             }
-            QPushButton:hover {
-                background-color: #005a9e;
-            }
             QPushButton:pressed {
                 background-color: #004080;
             }
@@ -72,11 +69,27 @@ class MainWindow(QMainWindow):
                 background-color: #1e1e1e;
                 border: 1px solid #444;
             }
+            QTableWidget::item {
+                padding: 6px;
+            }
             QHeaderView::section {
                 background-color: #444;
                 color: white;
                 padding: 4px;
                 font-weight: bold;
+            }
+            QScrollBar:vertical, QScrollBar:horizontal {
+                background: #333;
+                border: none;
+                width: 10px;
+                height: 10px;
+            }
+            QScrollBar::handle:vertical, QScrollBar::handle:horizontal {
+                background: #0078d7;
+                border-radius: 5px;
+            }
+            QScrollBar::handle:vertical:hover, QScrollBar::handle:horizontal:hover {
+                background: #005a9e;
             }
         """)
 
@@ -89,6 +102,7 @@ class MainWindow(QMainWindow):
         self.main_layout = QVBoxLayout(self.central_widget)
         self.main_layout.setContentsMargins(20, 20, 20, 20)
         self.main_layout.setSpacing(15)
+        
         self.setup_top_section(logo_path)
         self.setup_middle_section()
         # self.setup_timers()
@@ -97,6 +111,9 @@ class MainWindow(QMainWindow):
         self.add_server_button.setStyleSheet("font-size: 14px;")
         self.add_server_button.clicked.connect(self.open_add_server_popup)
         self.main_layout.addWidget(self.add_server_button, alignment=Qt.AlignCenter)
+        
+        self.main_layout.addWidget(self.middle_layout)
+    
         
     def open_add_server_popup(self):
         self.popup = AddServerWindow()
@@ -155,28 +172,43 @@ class MainWindow(QMainWindow):
     def setup_top_section(self, logo_path):
         top_layout = QHBoxLayout()
         self.logo_label = QLabel(self)
-        pixmap = QPixmap(logo_path)
-        self.logo_label.setPixmap(pixmap)
-        self.logo_label.setScaledContents(True)
-        self.logo_label.setFixedSize(80, 50)
+        # pixmap = QPixmap(logo_path)
+        # self.logo_label.setPixmap(pixmap)
+        # self.logo_label.setScaledContents(True)
+        # self.logo_label.setFixedSize(80, 50)
         self.title_label = QLabel("GCS CONTROL PANEL", self)
         self.title_label.setAlignment(Qt.AlignCenter)
         self.title_label.setStyleSheet("font-size: 24px; font-weight: bold;")
+        
+        self.btn_show_servers = QPushButton("Show Servers")
+        self.btn_show_table = QPushButton("Show Table")
+        self.btn_show_servers.clicked.connect(lambda: self.switch_view(0))
+        self.btn_show_table.clicked.connect(lambda: self.switch_view(1))
+        
         top_layout.addWidget(self.logo_label)
         top_layout.addStretch()
         top_layout.addWidget(self.title_label)
         top_layout.addStretch()
+        top_layout.addWidget(self.btn_show_servers)
+        top_layout.addStretch()
+        top_layout.addWidget(self.btn_show_table)
+        top_layout.addStretch()
+        
+        
         self.main_layout.addLayout(top_layout)
 
     def setup_middle_section(self):
-        self.middle_layout = QHBoxLayout()
-        server_layout = QHBoxLayout()
+        self.middle_layout = QStackedWidget()
+        
+        # server_container = QWidget()
+        # server_layout = QHBoxLayout(server_container)
         
         self.add_servers_to_grid()
         
-        self.middle_layout.addLayout(server_layout)
+        # self.middle_layout.addWidget(server_container)
         self.setup_logs_section(self.middle_layout)
-        self.main_layout.addLayout(self.middle_layout)
+        
+        # self.main_layout.addLayout(self.middle_layout)
 
     def create_server_section(self, server_name: str):
         layout = QVBoxLayout()
@@ -211,7 +243,8 @@ class MainWindow(QMainWindow):
 
     def add_servers_to_grid(self):
         """Adds server sections to a grid layout with 2 columns"""
-        grid_layout = QGridLayout()
+        grid_container = QWidget()
+        grid_layout = QGridLayout(grid_container)
         
         for index, server_name in enumerate(self.servers):
             row = index // 2  # Every 2 servers, move to the next row
@@ -220,10 +253,11 @@ class MainWindow(QMainWindow):
             server_section = self.create_server_section(server_name)
             grid_layout.addLayout(server_section, row, col)  # Place in grid
 
-        self.middle_layout.addLayout(grid_layout)  # Add to the main layout
+        self.middle_layout.addWidget(grid_container)  # Add to the main layout
 
     def setup_logs_section(self, parent_layout):
-        log_layout = QVBoxLayout()
+        log_container = QWidget()
+        log_layout = QVBoxLayout(log_container)
         log_label = QLabel("Logs", self)
         log_label.setAlignment(Qt.AlignLeft)
         log_label.setStyleSheet("font-size: 16px; font-weight: bold;")
@@ -232,6 +266,14 @@ class MainWindow(QMainWindow):
 
         self.log_table = QTableWidget(self)
         self.log_table.setColumnCount(len(self.servers) + 2)
+        self.log_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.log_table.setMinimumSize(600, 300)
+        self.log_table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
+        self.log_table.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.log_table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
+        self.log_table.setWordWrap(False)
+        self.log_table.setTextElideMode(Qt.ElideNone)
+        self.log_table.setShowGrid(True)
         
         header_labels = ["Date"]
         for server_name in self.servers:
@@ -239,7 +281,7 @@ class MainWindow(QMainWindow):
         header_labels.append("Message")
         
         self.log_table.setHorizontalHeaderLabels(header_labels)
-        self.log_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        self.log_table.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
         self.log_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.log_table.setStyleSheet("font-size: 12px;")
         
@@ -248,7 +290,7 @@ class MainWindow(QMainWindow):
         
         for i in range(len(self.servers)):
             print(i+1)
-            self.log_table.setColumnWidth(i+1, 100)
+            self.log_table.setColumnWidth(i+1, 150)
         print(i+2)
         self.log_table.setColumnWidth(i+1, 250)  # Message (unchanged width)
 
@@ -262,7 +304,7 @@ class MainWindow(QMainWindow):
         self.log_table.resizeRowsToContents()
 
         log_layout.addWidget(self.log_table)
-        parent_layout.addLayout(log_layout)
+        parent_layout.addWidget(log_container)
         self.log_event("Log Section Initialized.")
 
     def setup_timers(self):
@@ -367,6 +409,10 @@ class MainWindow(QMainWindow):
         if self.servers[server_name]["status"] is None:
             return "Stopped"
         return "Online" if self.servers[server_name]["status"] else "Offline"
+    
+    def switch_view(self, index):
+        """Switches between Server List and Table"""
+        self.middle_layout.setCurrentIndex(index)
 
 
 def run_app(width=1200, height=600, logo_path="gcs_logo.png"):
