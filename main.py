@@ -7,7 +7,7 @@ from add_server_window import AddServerWindow
 from ping3 import ping
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget,
-    QTableWidget, QTableWidgetItem, QSizePolicy, QHeaderView, QGridLayout, QStackedWidget, QAbstractScrollArea
+    QTableWidget, QTableWidgetItem, QSizePolicy, QHeaderView, QGridLayout, QStackedWidget, QAbstractScrollArea, QScrollArea
 )
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QPixmap
@@ -212,28 +212,20 @@ class MainWindow(QMainWindow):
 
     def create_server_section(self, server_name: str):
         layout = QVBoxLayout()
+        layout.setSpacing(10)  # Add some spacing between elements
 
         # Server name label
         label = QLabel(f"{server_name.title()} Server", self)
         label.setAlignment(Qt.AlignCenter)
         label.setStyleSheet("font-size: 18px; font-weight: bold;")
-        label.setFixedWidth(150)
+        label.setWordWrap(True)  # Enable word wrapping for long names
         layout.addWidget(label)
 
         # Status bar
         status_bar = QLabel(self)
-        status_bar.setFixedSize(150, 20)
+        status_bar.setFixedSize(200, 20)  # Increased width to accommodate longer names
         status_bar.setStyleSheet("background-color: red; border: 1px solid black;")
         layout.addWidget(status_bar, alignment=Qt.AlignCenter)
-
-        # Shutdown button
-        shutdown_button = QPushButton("Shutdown", self)
-        shutdown_button.setStyleSheet("font-size: 14px;")
-        shutdown_button.clicked.connect(partial(self.stop_ping, server_name=server_name))
-        layout.addWidget(shutdown_button, alignment=Qt.AlignCenter)
-
-        # Add stretch for spacing
-        layout.addStretch()
 
         # Store status bar reference
         self.servers[server_name]["status_bar"] = status_bar
@@ -242,18 +234,30 @@ class MainWindow(QMainWindow):
 
 
     def add_servers_to_grid(self):
-        """Adds server sections to a grid layout with 2 columns"""
+        """Adds server sections to a grid layout with 3 columns"""
+        # Create a scroll area
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)  # Disable horizontal scrolling
+        
+        # Create the container widget and grid layout
         grid_container = QWidget()
         grid_layout = QGridLayout(grid_container)
+        grid_layout.setSpacing(20)  # Add some spacing between server sections
         
+        # Add servers to the grid
         for index, server_name in enumerate(self.servers):
-            row = index // 2  # Every 2 servers, move to the next row
-            col = index % 2   # 0 for first column, 1 for second column
+            row = index // 3  # Every 3 servers, move to the next row
+            col = index % 3   # 0 for first column, 1 for second column, 2 for third column
             
             server_section = self.create_server_section(server_name)
             grid_layout.addLayout(server_section, row, col)  # Place in grid
 
-        self.middle_layout.addWidget(grid_container)  # Add to the main layout
+        # Set the grid container as the scroll area's widget
+        scroll_area.setWidget(grid_container)
+        
+        # Add the scroll area to the middle layout
+        self.middle_layout.addWidget(scroll_area)  # Add to the main layout
 
     def setup_logs_section(self, parent_layout):
         log_container = QWidget()
@@ -265,42 +269,26 @@ class MainWindow(QMainWindow):
         log_layout.addWidget(log_label)
 
         self.log_table = QTableWidget(self)
-        self.log_table.setColumnCount(len(self.servers) + 2)
+        self.log_table.setColumnCount(3)  # Only 3 columns: Time, Status, Message
         self.log_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.log_table.setMinimumSize(600, 300)
         self.log_table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.log_table.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
         self.log_table.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOn)
-        self.log_table.setWordWrap(False)
+        self.log_table.setWordWrap(True)
         self.log_table.setTextElideMode(Qt.ElideNone)
         self.log_table.setShowGrid(True)
         
-        header_labels = ["Date"]
-        for server_name in self.servers:
-            header_labels.append(f"{server_name.title()} Server")
-        header_labels.append("Message")
+        # Set column headers
+        self.log_table.setHorizontalHeaderLabels(["Time", "Server Status", "Message"])
         
-        self.log_table.setHorizontalHeaderLabels(header_labels)
-        self.log_table.horizontalHeader().setSectionResizeMode(QHeaderView.Interactive)
-        self.log_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        self.log_table.setStyleSheet("font-size: 12px;")
+        # Set column widths
+        self.log_table.setColumnWidth(0, 150)  # Time
+        self.log_table.setColumnWidth(1, 300)  # Server Status
+        self.log_table.setColumnWidth(2, 400)  # Message
         
-        # Set the width for each column
-        self.log_table.setColumnWidth(0, 100)  # Date (reduced width to 100px)
-        
-        for i in range(len(self.servers)):
-            print(i+1)
-            self.log_table.setColumnWidth(i+1, 150)
-        print(i+2)
-        self.log_table.setColumnWidth(i+1, 250)  # Message (unchanged width)
-
-        # Enable word wrapping for the message column
+        # Enable word wrapping for all columns
         self.log_table.setWordWrap(True)
-
-        # Set size policy for row height to allow wrapping
-        self.log_table.setRowHeight(0, 40)  # Set an initial height; this may need to be adjusted
-
-        # Make sure the row height adjusts automatically for word wrapping
         self.log_table.resizeRowsToContents()
 
         log_layout.addWidget(self.log_table)
@@ -317,11 +305,13 @@ class MainWindow(QMainWindow):
             self.servers[server_name]["timer"].timeout.connect(partial(self.ping_server, server_name=server_name, server_ip=server_ip))
             self.servers[server_name]["timer"].start(5000)
 
-    def log_event(self, message:str, add_headers:bool=False) -> None:
-        """Logs the current status of both servers to the table and log file.
+    def log_event(self, message:str, add_headers:bool=False, status_text:str=None) -> None:
+        """Logs the current status of servers to the table and log file.
 
         :param message: message to log
         :type message: str
+        :param status_text: optional status text to display, if None will show all server statuses
+        :type status_text: str
         """
         print(message, add_headers)
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -329,38 +319,41 @@ class MainWindow(QMainWindow):
         # Update log table
         row_position = self.log_table.rowCount()
         self.log_table.insertRow(row_position)
+        
+        # Add timestamp
         self.log_table.setItem(row_position, 0, QTableWidgetItem(timestamp))
         
-        current_row = 1
-        for server_name in self.servers:
-            print(f"{server_name} Server is currently {self.get_server_status(server_name)}")
-            self.log_table.setItem(row_position, current_row, QTableWidgetItem(self.get_server_status(server_name)))
-            current_row += 1
-            
-        self.log_table.setItem(row_position, current_row, QTableWidgetItem(message))
+        # Use provided status text or get all server statuses
+        if status_text is None:
+            status_text = ""
+            for server_name in self.servers:
+                status = self.get_server_status(server_name)
+                status_text += f"{server_name.title()}: {status}\n"
+        
+        self.log_table.setItem(row_position, 1, QTableWidgetItem(status_text.strip()))
+        
+        # Add message
+        self.log_table.setItem(row_position, 2, QTableWidgetItem(message))
 
         # Ensure headers are written if they are missing
         log_file_exists = os.path.exists(self.log_file)
         if not log_file_exists or add_headers or os.stat(self.log_file).st_size == 0:
-            headers = "Timestamp              "
-            for server_name in self.servers:
-                headers += f"| {server_name.title()} Server   "
-            headers += "| Message"
-            
-            divider = "-" * 70
+            headers = "Timestamp              | Server Statuses | Message"
+            divider = "-" * 100
             
             with open(self.log_file, 'a') as log_file:
-                log_file.write(f"{headers}\n{divider}\n")  # Write headers with divider
+                log_file.write(f"{headers}\n{divider}\n")
 
         # Append the log entry
-        log_message = f"{timestamp:<22}"
-        
-        for server_name in self.servers:
-            log_message += f"| {self.get_server_status(server_name):<13}"
-        log_message += f"| {message}"
+        log_message = f"{timestamp:<22}| {status_text.strip():<50}| {message}"
         
         with open(self.log_file, 'a') as log_file:
             log_file.write(log_message + "\n")
+            
+        # Scroll to the latest entry
+        self.log_table.scrollToBottom()
+        # Select the latest row to highlight it
+        self.log_table.selectRow(row_position)
 
     def update_status_bar(self, status_bar, color:str):
         """updates status bar to correct color
@@ -385,19 +378,22 @@ class MainWindow(QMainWindow):
         try:
             response = ping(server_ip, timeout=2)  # Timeout set to 2 seconds
             if response is not None:  # If response is a valid number, the server is reachable
-                # if not self.voice_server_status:  Status changed to reachable
-                self.update_status_bar(self.servers[server_name]["status_bar"], "green")
                 if not self.servers[server_name]["status"]:
                     self.servers[server_name]["status"] = True
-                    self.log_event(f"{server_name.title()} Server became reachable.")
+                    self.update_status_bar(self.servers[server_name]["status_bar"], "green")
+                    status_text = f"{server_name.title()}: Online"
+                    self.log_event(f"{server_name.title()} Server became reachable.", status_text=status_text)
             else:  # If response is None, server is unreachable
-                self.update_status_bar(self.servers[server_name]["status_bar"], "red")
                 if self.servers[server_name]["status"]:  # Status changed to unreachable
-                    self.voice_server_status = False
-                    self.log_event(f"{server_name.title()} Server became unreachable.")
+                    self.servers[server_name]["status"] = False
+                    self.update_status_bar(self.servers[server_name]["status_bar"], "red")
+                    status_text = f"{server_name.title()}: Offline"
+                    self.log_event(f"{server_name.title()} Server became unreachable.", status_text=status_text)
         except Exception as e:
+            self.servers[server_name]["status"] = False
             self.update_status_bar(self.servers[server_name]["status_bar"], "red")
-            self.log_event(f"Ping failed for {server_name.title()} Server: {e}")
+            status_text = f"{server_name.title()}: Offline"
+            self.log_event(f"Ping failed for {server_name.title()} Server: {e}", status_text=status_text)
     
     def stop_ping(self, server_name:str) -> None:
         self.servers[server_name]["timer"].stop()
