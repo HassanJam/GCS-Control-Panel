@@ -1,0 +1,124 @@
+Timestamp              | Voice Server   | Window Server   | Me Server   | Message
+----------------------------------------------------------------------
+2025-03-20 12:44:43   | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 12:44:48   | Offline      | Online       | Offline      | Window Server became reachable.
+2025-03-20 12:44:48   | Online       | Online       | Offline      | Voice Server became reachable.
+2025-03-20 12:44:48   | Online       | Online       | Online       | Me Server became reachable.
+2025-03-20 12:44:52   | Online       | Online       | Stopped      | Me Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Message
+----------------------------------------------------------------------
+2025-03-20 12:45:03   | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 12:45:03   | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 12:45:08   | Offline      | Offline      | Offline      | Online       | Test Server became reachable.
+2025-03-20 12:45:08   | Offline      | Online       | Offline      | Online       | Window Server became reachable.
+2025-03-20 12:45:08   | Online       | Online       | Offline      | Online       | Voice Server became reachable.
+2025-03-20 12:45:08   | Online       | Online       | Online       | Online       | Me Server became reachable.
+2025-03-20 12:50:43   | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 12:50:48   | Offline      | Online       | Offline      | Offline      | Window Server became reachable.
+2025-03-20 12:50:48   | Offline      | Online       | Offline      | Online       | Test Server became reachable.
+2025-03-20 12:50:48   | Offline      | Online       | Online       | Online       | Me Server became reachable.
+2025-03-20 12:50:48   | Online       | Online       | Online       | Online       | Voice Server became reachable.
+2025-03-20 12:50:50   | Online       | Online       | Online       | Stopped      | Test Server monitoring stopped.
+2025-03-20 12:50:56   | Online       | Online       | Stopped      | Stopped      | Me Server monitoring stopped.
+2025-03-20 12:50:56   | Online       | Online       | Stopped      | Stopped      | Me Server monitoring stopped.
+2025-03-20 12:50:57   | Online       | Stopped      | Stopped      | Stopped      | Window Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Message
+----------------------------------------------------------------------
+2025-03-20 12:51:06   | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 12:51:06   | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 12:51:08   | Offline      | Online       | Offline      | Offline      | Offline      | Window Server became reachable.
+2025-03-20 12:51:08   | Offline      | Online       | Offline      | Offline      | Online       | Test2 Server became reachable.
+2025-03-20 12:51:08   | Offline      | Online       | Offline      | Online       | Online       | Test Server became reachable.
+2025-03-20 12:51:08   | Offline      | Online       | Online       | Online       | Online       | Me Server became reachable.
+2025-03-20 12:51:08   | Online       | Online       | Online       | Online       | Online       | Voice Server became reachable.
+2025-03-20 12:58:32   | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 12:58:37   | Offline      | Offline      | Offline      | Offline      | Online       | Test2 Server became reachable.
+2025-03-20 12:58:37   | Offline      | Online       | Offline      | Offline      | Online       | Window Server became reachable.
+2025-03-20 12:58:37   | Offline      | Online       | Offline      | Online       | Online       | Test Server became reachable.
+2025-03-20 12:58:37   | Offline      | Online       | Online       | Online       | Online       | Me Server became reachable.
+2025-03-20 12:58:38   | Online       | Online       | Online       | Online       | Online       | Voice Server became reachable.
+2025-03-20 12:59:09   | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 12:59:14   | Offline      | Offline      | Offline      | Offline      | Online       | Test2 Server became reachable.
+2025-03-20 12:59:14   | Offline      | Online       | Offline      | Offline      | Online       | Window Server became reachable.
+2025-03-20 12:59:14   | Offline      | Online       | Offline      | Online       | Online       | Test Server became reachable.
+2025-03-20 12:59:14   | Offline      | Online       | Online       | Online       | Online       | Me Server became reachable.
+2025-03-20 12:59:14   | Online       | Online       | Online       | Online       | Online       | Voice Server became reachable.
+2025-03-20 12:59:18   | Online       | Online       | Online       | Online       | Stopped      | Test2 Server monitoring stopped.
+2025-03-20 13:01:34   | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:01:39   | Online       | Offline      | Offline      | Offline      | Offline      | Voice Server became reachable.
+2025-03-20 13:01:39   | Online       | Offline      | Offline      | Online       | Offline      | Test Server became reachable.
+2025-03-20 13:01:39   | Online       | Online       | Offline      | Online       | Offline      | Window Server became reachable.
+2025-03-20 13:01:39   | Online       | Online       | Offline      | Online       | Online       | Test2 Server became reachable.
+2025-03-20 13:01:39   | Online       | Online       | Online       | Online       | Online       | Me Server became reachable.
+2025-03-20 13:03:04   | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:03:09   | Offline      | Offline      | Offline      | Offline      | Online       | Test2 Server became reachable.
+2025-03-20 13:03:09   | Offline      | Offline      | Offline      | Online       | Online       | Test Server became reachable.
+2025-03-20 13:03:09   | Offline      | Online       | Offline      | Online       | Online       | Window Server became reachable.
+2025-03-20 13:03:09   | Online       | Online       | Offline      | Online       | Online       | Voice Server became reachable.
+2025-03-20 13:03:09   | Online       | Online       | Online       | Online       | Online       | Me Server became reachable.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Uhiu Server   | Message
+----------------------------------------------------------------------
+2025-03-20 13:03:36   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 13:03:36   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:03:39   | Offline      | Offline      | Offline      | Offline      | Online       | Offline      | Test2 Server became reachable.
+2025-03-20 13:03:39   | Offline      | Online       | Offline      | Offline      | Online       | Offline      | Window Server became reachable.
+2025-03-20 13:03:39   | Offline      | Online       | Offline      | Online       | Online       | Offline      | Test Server became reachable.
+2025-03-20 13:03:39   | Offline      | Online       | Online       | Online       | Online       | Offline      | Me Server became reachable.
+2025-03-20 13:03:39   | Online       | Online       | Online       | Online       | Online       | Offline      | Voice Server became reachable.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Uhiu Server   | Gyg Server   | Message
+----------------------------------------------------------------------
+2025-03-20 13:03:42   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 13:03:42   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:03:44   | Offline      | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Window Server became reachable.
+2025-03-20 13:03:44   | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Voice Server became reachable.
+2025-03-20 13:03:44   | Online       | Online       | Offline      | Offline      | Online       | Offline      | Offline      | Test2 Server became reachable.
+2025-03-20 13:03:44   | Online       | Online       | Offline      | Online       | Online       | Offline      | Offline      | Test Server became reachable.
+2025-03-20 13:03:44   | Online       | Online       | Online       | Online       | Online       | Offline      | Offline      | Me Server became reachable.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Uhiu Server   | Gyg Server   | Yui Server   | Message
+----------------------------------------------------------------------
+2025-03-20 13:03:46   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 13:03:46   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:03:49   | Offline      | Offline      | Offline      | Offline      | Online       | Offline      | Offline      | Offline      | Test2 Server became reachable.
+2025-03-20 13:03:49   | Offline      | Offline      | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Test Server became reachable.
+2025-03-20 13:03:49   | Offline      | Online       | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Window Server became reachable.
+2025-03-20 13:03:49   | Offline      | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Me Server became reachable.
+2025-03-20 13:03:49   | Online       | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Voice Server became reachable.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Uhiu Server   | Gyg Server   | Yui Server   | Ftf Server   | Message
+----------------------------------------------------------------------
+2025-03-20 13:03:50   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 13:03:50   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:03:54   | Offline      | Offline      | Offline      | Offline      | Online       | Offline      | Offline      | Offline      | Offline      | Test2 Server became reachable.
+2025-03-20 13:03:54   | Offline      | Offline      | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Test Server became reachable.
+2025-03-20 13:03:54   | Offline      | Online       | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Window Server became reachable.
+2025-03-20 13:03:54   | Offline      | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Me Server became reachable.
+2025-03-20 13:03:54   | Online       | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Voice Server became reachable.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Uhiu Server   | Gyg Server   | Yui Server   | Ftf Server   | Gfyd7568798 Server   | Message
+----------------------------------------------------------------------
+2025-03-20 13:03:55   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 13:03:55   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Uhiu Server   | Gyg Server   | Yui Server   | Ftf Server   | Gfyd7568798 Server   | Hkh Server   | Message
+----------------------------------------------------------------------
+2025-03-20 13:03:59   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 13:03:59   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:03:59   | Offline      | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Window Server became reachable.
+2025-03-20 13:03:59   | Offline      | Online       | Offline      | Offline      | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Test2 Server became reachable.
+2025-03-20 13:03:59   | Offline      | Online       | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Test Server became reachable.
+2025-03-20 13:03:59   | Online       | Online       | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Voice Server became reachable.
+2025-03-20 13:03:59   | Online       | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Me Server became reachable.
+2025-03-20 13:04:18   | Online       | Online       | Online       | Online       | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Test2 Server monitoring stopped.
+2025-03-20 13:04:27   | Online       | Online       | Stopped      | Online       | Stopped      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Me Server monitoring stopped.
+Timestamp              | Voice Server   | Window Server   | Me Server   | Test Server   | Test2 Server   | Uhiu Server   | Gyg Server   | Yui Server   | Ftf Server   | Gfyd7568798 Server   | Hkh Server   | Hkuh Server   | Message
+----------------------------------------------------------------------
+2025-03-20 13:04:30   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Added a new server
+2025-03-20 13:04:30   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:04:34   | Offline      | Offline      | Offline      | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Test Server became reachable.
+2025-03-20 13:04:34   | Offline      | Offline      | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Test2 Server became reachable.
+2025-03-20 13:04:34   | Offline      | Online       | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Window Server became reachable.
+2025-03-20 13:04:34   | Offline      | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Me Server became reachable.
+2025-03-20 13:04:34   | Online       | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Voice Server became reachable.
+2025-03-20 13:57:20   | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Log Section Initialized.
+2025-03-20 13:57:25   | Offline      | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Window Server became reachable.
+2025-03-20 13:57:25   | Offline      | Online       | Offline      | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Test Server became reachable.
+2025-03-20 13:57:25   | Offline      | Online       | Offline      | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Test2 Server became reachable.
+2025-03-20 13:57:25   | Offline      | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Me Server became reachable.
+2025-03-20 13:57:25   | Online       | Online       | Online       | Online       | Online       | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Offline      | Voice Server became reachable.

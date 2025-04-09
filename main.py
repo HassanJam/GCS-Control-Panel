@@ -3,40 +3,50 @@ import os
 import json
 from functools import partial
 from typing import Dict
-from add_server_window import AddServerWindow
-from ping3 import ping
-from PyQt5.QtWidgets import (
-    QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget,
-    QTableWidget, QTableWidgetItem, QSizePolicy, QHeaderView, QGridLayout
-)
-from PyQt5.QtCore import Qt, QTimer
-from PyQt5.QtGui import QPixmap
 from datetime import datetime
 
+from add_server_window import AddServerWindow
+from PyQt5.QtWidgets import (
+    QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget,
+    QTableWidget, QTableWidgetItem, QSizePolicy, QHeaderView, QGridLayout, QTabWidget
+)
+from PyQt5.QtCore import Qt, QTimer, QRunnable, QThreadPool, pyqtSignal, QObject
+from PyQt5.QtGui import QPixmap
 from ping3 import ping
 
 JSON_FILE = "servers.json"
 
 def get_servers() -> Dict:
-    """reads the server names and ips from the json file in JSON_FILE
-
-    :return: a dictionary where the key is the server name, and it points to a dictionary where the key 'ip' points to
-    the ip address of the server
-    :rtype: Dictionary
-    """
-    
-    # if path does not exist, create it
+    """Reads the server names and ips from the JSON_FILE."""
     if not os.path.exists(JSON_FILE):
         with open(JSON_FILE, "w") as file:
             json.dump({}, file)
-                
     with open(JSON_FILE, "r") as file:
         try:
-            return json.load(file)  # Return as dictionary
+            return json.load(file)
         except json.JSONDecodeError:
-            return {}  # Return empty if file is corrupted
+            return {}
     return {}
 
+# Signal emitter for ping results
+class PingSignalEmitter(QObject):
+    result_signal = pyqtSignal(str, bool)
+
+# A runnable that pings a server without blocking the UI.
+class PingTask(QRunnable):
+    def __init__(self, server_name: str, server_ip: str, emitter: PingSignalEmitter):
+        super().__init__()
+        self.server_name = server_name
+        self.server_ip = server_ip
+        self.emitter = emitter
+
+    def run(self):
+        try:
+            response = ping(self.server_ip, timeout=2)
+            success = isinstance(response, float)
+        except Exception:
+            success = False
+        self.emitter.result_signal.emit(self.server_name, success)
 
 class MainWindow(QMainWindow):
     def __init__(self, width, height, logo_path, log_file):
@@ -62,9 +72,6 @@ class MainWindow(QMainWindow):
             QPushButton:hover {
                 background-color: #005a9e;
             }
-            QPushButton:hover {
-                background-color: #005a9e;
-            }
             QPushButton:pressed {
                 background-color: #004080;
             }
@@ -78,11 +85,29 @@ class MainWindow(QMainWindow):
                 padding: 4px;
                 font-weight: bold;
             }
+            /* Style for QTabWidget and QTabBar */
+            QTabWidget::pane {
+                border: 1px solid #444;
+                top: -1px;
+            }
+            QTabBar::tab {
+                background: #444;
+                color: #ffffff;
+                padding: 10px;
+                border: 1px solid #444;
+                border-bottom: none;
+                min-width: 120px;
+            }
+            QTabBar::tab:selected {
+                background: #0078d7;
+                color: #ffffff;
+                border-bottom: 1px solid #0078d7;
+            }
+            QTabBar::tab:hover {
+                background: #005a9e;
+            }
         """)
 
-        self.refresh_servers()
-        self.setWindowTitle("GCS SERVER CONTROL PANEL")
-        self.setGeometry(100, 100, width, height)
         self.log_file = log_file
         self.central_widget = QWidget(self)
         self.setCentralWidget(self.central_widget)
@@ -90,61 +115,57 @@ class MainWindow(QMainWindow):
         self.main_layout.setContentsMargins(20, 20, 20, 20)
         self.main_layout.setSpacing(15)
         self.setup_top_section(logo_path)
+
+        self.refresh_servers()
         self.setup_middle_section()
-        # self.setup_timers()
-        
+
+        # Add Server button (preserved functionality)
         self.add_server_button = QPushButton("Add Server", self)
         self.add_server_button.setStyleSheet("font-size: 14px;")
         self.add_server_button.clicked.connect(self.open_add_server_popup)
         self.main_layout.addWidget(self.add_server_button, alignment=Qt.AlignCenter)
-        
+
+        # Timer to schedule ping tasks for all servers.
+        self.ping_timer = QTimer(self)
+        self.ping_timer.setInterval(5000)  # 5-second interval
+        self.ping_timer.timeout.connect(self.ping_all_servers)
+        self.ping_timer.start()
+
+        # Create signal emitter and global thread pool.
+        self.ping_emitter = PingSignalEmitter()
+        self.ping_emitter.result_signal.connect(self.handle_ping_result)
+        self.thread_pool = QThreadPool.globalInstance()
+
     def open_add_server_popup(self):
-        self.popup = AddServerWindow()
-        self.popup.exec_()
-        self.stop_all_timers()
-        self.refresh_servers()
-        self.log_event(message="Added a new server", add_headers=True)
-        self.refresh_middle_section()
-        
+        # Open the add server dialog.
+        popup = AddServerWindow()
+        if popup.exec_():
+            # After the popup closes, refresh servers from file.
+            self.refresh_servers()
+            self.log_event("Added a new server", add_headers=True)
+            self.refresh_middle_section()
+
     def refresh_servers(self):
-        """reads servers and creates timers for them
-        """
-        
+        """Reads servers from file and resets their status."""
         self.servers = get_servers()
-        
         for server_name in self.servers:
             self.servers[server_name]["status"] = False
-        
-        self.setup_timers()
-        
-    def stop_all_timers(self):
-        """stops all timers of the servers"""
-        for server_name in self.servers:
-            self.stop_ping(server_name=server_name)
-    
+
     def refresh_middle_section(self):
-        """Removes the middle layout and rebuilds it to reflect added servers."""
-        print("Refreshing middle section...")
+        """Rebuilds the tabs to reflect added servers."""
+        if hasattr(self, "tabs"):
+            # Clear servers tab layout
+            self.clear_layout(self.servers_layout)
+            self.add_servers_to_grid()
+            # Clear logs tab layout and reinitialize log table.
+            self.clear_layout(self.logs_layout)
+            self.setup_logs_section(self.logs_layout)
 
-        # Check if middle_layout exists and remove it from main_layout
-        if self.middle_layout:
-            while self.middle_layout.count():
-                item = self.middle_layout.takeAt(0)
-                if item.widget():
-                    item.widget().setParent(None)
-                elif item.layout():
-                    self.clear_layout(item.layout())  # Recursively clear sub-layouts
-
-            self.main_layout.removeItem(self.middle_layout)  # Removes it from main_layout
-            self.middle_layout.deleteLater()  # Marks it for deletion
-
-        # Recreate the middle layout
-        self.setup_middle_section()
-
-        print("Middle section refreshed successfully!")
+    def closeEvent(self, event):
+        self.ping_timer.stop()
+        event.accept()
 
     def clear_layout(self, layout):
-        """Recursively clears a given layout."""
         while layout.count():
             item = layout.takeAt(0)
             if item.widget():
@@ -169,212 +190,152 @@ class MainWindow(QMainWindow):
         self.main_layout.addLayout(top_layout)
 
     def setup_middle_section(self):
-        self.middle_layout = QHBoxLayout()
-        server_layout = QHBoxLayout()
+        # Create a tab widget with two tabs: Servers and Logs
+        self.tabs = QTabWidget()
+        self.servers_tab = QWidget()
+        self.logs_tab = QWidget()
+        self.tabs.addTab(self.servers_tab, "Servers")
+        self.tabs.addTab(self.logs_tab, "Logs")
         
+        # Layout for the Servers tab
+        self.servers_layout = QVBoxLayout(self.servers_tab)
         self.add_servers_to_grid()
         
-        self.middle_layout.addLayout(server_layout)
-        self.setup_logs_section(self.middle_layout)
-        self.main_layout.addLayout(self.middle_layout)
+        # Layout for the Logs tab
+        self.logs_layout = QVBoxLayout(self.logs_tab)
+        self.setup_logs_section(self.logs_layout)
+        
+        self.main_layout.addWidget(self.tabs)
 
     def create_server_section(self, server_name: str):
         layout = QVBoxLayout()
-
-        # Server name label
         label = QLabel(f"{server_name.title()} Server", self)
         label.setAlignment(Qt.AlignCenter)
         label.setStyleSheet("font-size: 18px; font-weight: bold;")
         label.setFixedWidth(150)
         layout.addWidget(label)
 
-        # Status bar
         status_bar = QLabel(self)
         status_bar.setFixedSize(150, 20)
         status_bar.setStyleSheet("background-color: red; border: 1px solid black;")
         layout.addWidget(status_bar, alignment=Qt.AlignCenter)
 
-        # Shutdown button
         shutdown_button = QPushButton("Shutdown", self)
         shutdown_button.setStyleSheet("font-size: 14px;")
         shutdown_button.clicked.connect(partial(self.stop_ping, server_name=server_name))
         layout.addWidget(shutdown_button, alignment=Qt.AlignCenter)
-
-        # Add stretch for spacing
         layout.addStretch()
-
-        # Store status bar reference
         self.servers[server_name]["status_bar"] = status_bar
-
-        return layout  # Return the layout for adding to the grid
-
+        return layout
 
     def add_servers_to_grid(self):
-        """Adds server sections to a grid layout with 2 columns"""
         grid_layout = QGridLayout()
-        
         for index, server_name in enumerate(self.servers):
-            row = index // 2  # Every 2 servers, move to the next row
-            col = index % 2   # 0 for first column, 1 for second column
-            
+            row = index // 2
+            col = index % 2
             server_section = self.create_server_section(server_name)
-            grid_layout.addLayout(server_section, row, col)  # Place in grid
-
-        self.middle_layout.addLayout(grid_layout)  # Add to the main layout
+            grid_layout.addLayout(server_section, row, col)
+        self.servers_layout.addLayout(grid_layout)
 
     def setup_logs_section(self, parent_layout):
-        log_layout = QVBoxLayout()
         log_label = QLabel("Logs", self)
         log_label.setAlignment(Qt.AlignLeft)
         log_label.setStyleSheet("font-size: 16px; font-weight: bold;")
         log_label.setFixedWidth(150)
-        log_layout.addWidget(log_label)
+        parent_layout.addWidget(log_label)
 
         self.log_table = QTableWidget(self)
         self.log_table.setColumnCount(len(self.servers) + 2)
-        
         header_labels = ["Date"]
         for server_name in self.servers:
             header_labels.append(f"{server_name.title()} Server")
         header_labels.append("Message")
-        
         self.log_table.setHorizontalHeaderLabels(header_labels)
         self.log_table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
         self.log_table.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self.log_table.setStyleSheet("font-size: 12px;")
-        
-        # Set the width for each column
-        self.log_table.setColumnWidth(0, 100)  # Date (reduced width to 100px)
-        
+        self.log_table.setColumnWidth(0, 100)
         for i in range(len(self.servers)):
-            print(i+1)
             self.log_table.setColumnWidth(i+1, 100)
-        print(i+2)
-        self.log_table.setColumnWidth(i+1, 250)  # Message (unchanged width)
-
-        # Enable word wrapping for the message column
+        self.log_table.setColumnWidth(len(self.servers)+1, 250)
         self.log_table.setWordWrap(True)
-
-        # Set size policy for row height to allow wrapping
-        self.log_table.setRowHeight(0, 40)  # Set an initial height; this may need to be adjusted
-
-        # Make sure the row height adjusts automatically for word wrapping
+        self.log_table.setRowHeight(0, 40)
         self.log_table.resizeRowsToContents()
-
-        log_layout.addWidget(self.log_table)
-        parent_layout.addLayout(log_layout)
+        parent_layout.addWidget(self.log_table)
         self.log_event("Log Section Initialized.")
 
-    def setup_timers(self):
-        """sets up timers for each server
-        """
-        for server_name in self.servers:
-            print(f"creating timer for {server_name}")
-            server_ip = self.servers[server_name]["ip"]
-            self.servers[server_name]["timer"] = QTimer(self)
-            self.servers[server_name]["timer"].timeout.connect(partial(self.ping_server, server_name=server_name, server_ip=server_ip))
-            self.servers[server_name]["timer"].start(5000)
+    def ping_all_servers(self):
+        """Schedules a ping task for each server concurrently."""
+        for server_name, server_data in self.servers.items():
+            # Skip pinging if server has been stopped.
+            if server_data.get("status") is None:
+                continue
+            server_ip = server_data["ip"]
+            task = PingTask(server_name, server_ip, self.ping_emitter)
+            self.thread_pool.start(task)
 
-    def log_event(self, message:str, add_headers:bool=False) -> None:
-        """Logs the current status of both servers to the table and log file.
+    def handle_ping_result(self, server_name, result):
+        """Updates UI based on ping result."""
+        if result:
+            self.update_status_bar(self.servers[server_name]["status_bar"], "green")
+            if not self.servers[server_name].get("status", False):
+                self.servers[server_name]["status"] = True
+                self.log_event(f"{server_name.title()} Server became reachable.")
+        else:
+            self.update_status_bar(self.servers[server_name]["status_bar"], "red")
+            if self.servers[server_name].get("status", False):
+                self.servers[server_name]["status"] = False
+                self.log_event(f"{server_name.title()} Server became unreachable.")
 
-        :param message: message to log
-        :type message: str
-        """
-        print(message, add_headers)
+    def log_event(self, message: str, add_headers: bool = False) -> None:
         timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-
-        # Update log table
         row_position = self.log_table.rowCount()
         self.log_table.insertRow(row_position)
         self.log_table.setItem(row_position, 0, QTableWidgetItem(timestamp))
-        
         current_row = 1
         for server_name in self.servers:
-            print(f"{server_name} Server is currently {self.get_server_status(server_name)}")
             self.log_table.setItem(row_position, current_row, QTableWidgetItem(self.get_server_status(server_name)))
             current_row += 1
-            
         self.log_table.setItem(row_position, current_row, QTableWidgetItem(message))
-
-        # Ensure headers are written if they are missing
         log_file_exists = os.path.exists(self.log_file)
         if not log_file_exists or add_headers or os.stat(self.log_file).st_size == 0:
             headers = "Timestamp              "
             for server_name in self.servers:
                 headers += f"| {server_name.title()} Server   "
             headers += "| Message"
-            
             divider = "-" * 70
-            
             with open(self.log_file, 'a') as log_file:
-                log_file.write(f"{headers}\n{divider}\n")  # Write headers with divider
-
-        # Append the log entry
+                log_file.write(f"{headers}\n{divider}\n")
         log_message = f"{timestamp:<22}"
-        
         for server_name in self.servers:
             log_message += f"| {self.get_server_status(server_name):<13}"
         log_message += f"| {message}"
-        
         with open(self.log_file, 'a') as log_file:
             log_file.write(log_message + "\n")
 
-    def update_status_bar(self, status_bar, color:str):
-        """updates status bar to correct color
-
-        :param status_bar: status bar object
-        :type status_bar: status bar object
-        :param color: color of bar, green or red
-        :type color: str
-        """
+    def update_status_bar(self, status_bar, color: str):
         status_bar.setStyleSheet(f"background-color: {color}; border: 1px solid black;")
-        
-    def ping_server(self, server_name:str, server_ip:str) -> None:
-        """pings the given ip address and updates the status and status bar for the server
 
-        :param name: name of server
-        :type name: str
-        :param ip: ip address of server
-        :type ip: str
-        """
-        
-        print(f"pinging {server_name} with ip {server_ip}")
-        try:
-            response = ping(server_ip, timeout=2)  # Timeout set to 2 seconds
-            if response is not None:  # If response is a valid number, the server is reachable
-                # if not self.voice_server_status:  Status changed to reachable
-                self.update_status_bar(self.servers[server_name]["status_bar"], "green")
-                if not self.servers[server_name]["status"]:
-                    self.servers[server_name]["status"] = True
-                    self.log_event(f"{server_name.title()} Server became reachable.")
-            else:  # If response is None, server is unreachable
-                self.update_status_bar(self.servers[server_name]["status_bar"], "red")
-                if self.servers[server_name]["status"]:  # Status changed to unreachable
-                    self.voice_server_status = False
-                    self.log_event(f"{server_name.title()} Server became unreachable.")
-        except Exception as e:
+    def stop_ping(self, server_name: str) -> None:
+        """Stops pinging for a given server by setting its status to None."""
+        if server_name in self.servers:
             self.update_status_bar(self.servers[server_name]["status_bar"], "red")
-            self.log_event(f"Ping failed for {server_name.title()} Server: {e}")
-    
-    def stop_ping(self, server_name:str) -> None:
-        self.servers[server_name]["timer"].stop()
-        self.update_status_bar(self.servers[server_name]["status_bar"], "red")
-        self.servers[server_name]["status"] = None
-        self.log_event(f"{server_name.title()} Server monitoring stopped.")
-        
-    def get_server_status(self, server_name:str):
+            self.servers[server_name]["status"] = None
+            self.log_event(f"{server_name.title()} Server monitoring stopped.")
+
+    def get_server_status(self, server_name: str):
         if self.servers[server_name]["status"] is None:
             return "Stopped"
         return "Online" if self.servers[server_name]["status"] else "Offline"
-
 
 def run_app(width=1200, height=600, logo_path="gcs_logo.png"):
     log_file = datetime.now().strftime("gcs_control_panel_log_%Y_%m_%d.txt")
     app = QApplication(sys.argv)
     window = MainWindow(width, height, logo_path, log_file)
+    window.setWindowTitle("GCS SERVER CONTROL PANEL")
+    window.setGeometry(100, 100, width, height)
     window.show()
     sys.exit(app.exec_())
 
-
-run_app()
+if __name__ == "__main__":
+    run_app()
